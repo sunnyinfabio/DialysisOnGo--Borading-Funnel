@@ -503,7 +503,7 @@ export default function Home() {
                             <div className="w-10 h-10 rounded-full bg-slate-200 flex flex-shrink-0"></div>
                             <div>
                               <div className="font-bold text-sm text-secondary">Patient #{1024 + i}</div>
-                              <div className="text-xs text-text-muted">Traveling from {['Delhi', 'Mumbai', 'London'][i%3]}</div>
+                              <div className="text-xs text-text-muted">Traveling from {['Delhi', 'Mumbai', 'Rajasthan'][i%3]}</div>
                             </div>
                           </div>
                           <button className="text-xs font-bold bg-primary/10 text-primary px-3 py-1.5 rounded hover:bg-primary hover:text-white transition-colors">Accept</button>
