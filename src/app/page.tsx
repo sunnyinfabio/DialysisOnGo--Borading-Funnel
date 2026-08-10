@@ -294,27 +294,30 @@ export default function Home() {
       {/* Hero */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }} ref={canvasRef}></div>
-        <div className="max-w-7xl mx-auto px-6 w-full relative hero-text pointer-events-auto" style={{ zIndex: 10 }}>
+        <div className="max-w-7xl mx-auto px-6 w-full relative hero-text pointer-events-auto flex flex-col items-center text-center" style={{ zIndex: 10 }}>
           <span className="inline-block tracking-widest uppercase text-sm font-bold text-primary mb-4 bg-primary/10 px-4 py-1.5 rounded-full">Partner with DialysisOnGo</span>
-          <h1 className="text-5xl md:text-7xl font-black text-secondary leading-tight max-w-3xl mb-6">
-            Make your center easier to discover when patients <span className="font-serif italic text-primary">travel</span>.
+          
+          <h1 className="text-5xl md:text-7xl md:leading-[1.1] font-black text-[#1a1f2e] max-w-4xl mb-6">
+            Make your <span className="italic text-[#e12454]">Center</span> easier to discover, <br className="hidden md:block" />
+            <span className="font-serif italic font-normal text-slate-600">when patients</span> <span className="font-black text-[#1a1f2e]">travel.</span>
           </h1>
+          
           <p className="text-xl text-text-muted max-w-2xl mb-10 leading-relaxed">
             Join the DialysisOnGo network and present your center's services, availability and information to patients looking for dialysis care.
           </p>
 
-          <div className="bg-white/90 backdrop-blur-md p-2 rounded-full border border-border shadow-lg flex items-center max-w-lg mb-10">
+          <div className="bg-white/90 backdrop-blur-md p-2 rounded-full border border-border shadow-lg flex items-center w-full max-w-lg mb-10 mx-auto">
             <span className="pl-6 text-xl opacity-50">📍</span>
             <input 
               type="text" 
               placeholder="Where is your center located?" 
               value={centerLocation}
               onChange={(e) => setCenterLocation(e.target.value)}
-              className="flex-1 bg-transparent border-none outline-none px-4 py-3 text-secondary font-medium"
+              className="flex-1 bg-transparent border-none outline-none px-4 py-3 text-secondary font-medium w-full"
             />
           </div>
 
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             <button 
               onClick={() => { setShowFormModal(true); setFormStep(0); }}
               className="bg-primary hover:bg-primary-hover text-white px-8 py-4 rounded-full font-bold shadow-lg hover:shadow-xl inline-block"
