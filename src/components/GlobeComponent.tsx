@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Globe from "react-globe.gl";
 
 export default function GlobeComponent() {
-  const globeRef = useRef<any>();
+  const globeRef = useRef<any>(null);
   const [arcsData, setArcsData] = useState<any[]>([]);
 
   useEffect(() => {
