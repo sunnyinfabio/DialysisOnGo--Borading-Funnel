@@ -116,13 +116,25 @@ export default function Footer() {
           </div>
         </div>
         
-        {/* Developer Credit */}
-        <div className="mt-8 flex items-center gap-2">
-          <span className="text-[12px] text-[#8c9bb0] font-medium">Maintained & Developed by</span>
-          <a href="#" className="flex items-center gap-1.5 text-[12px] text-[#8c9bb0] hover:text-primary font-medium transition-colors">
-            <div className="w-4 h-4 rounded-full bg-orange-100 flex items-center justify-center text-orange-500 font-bold" style={{ fontSize: '10px' }}>S</div>
-            Sensation Software Solutions Private Limited
-          </a>
+        {/* Developer & Site Credit */}
+        <div className="mt-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-2">
+            <span className="text-[12px] text-[#8c9bb0] font-medium">Maintained & Developed by</span>
+            <a href="#" className="flex items-center gap-1.5 text-[12px] text-[#8c9bb0] hover:text-primary font-medium transition-colors">
+              <div className="w-4 h-4 rounded-full bg-orange-100 flex items-center justify-center text-orange-500 font-bold" style={{ fontSize: '10px' }}>S</div>
+              Sensation Software Solutions Private Limited
+            </a>
+          </div>
+          
+          <div className="flex items-center gap-[10px] px-3 py-2 border border-slate-200 rounded-[10px] w-fit bg-slate-50/50 backdrop-blur-md">
+            <a href="https://play.fabulousmedia.in" target="_blank" rel="noopener noreferrer" aria-label="FabulousMedia" className="flex items-center justify-center bg-white p-1 rounded-md opacity-60 transition-all duration-350 ease-out hover:opacity-100 hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(253,181,20,0.5)]">
+              <img src="https://play.fabulousmedia.in/sitecredit/images/fabulousmedia.svg" alt="FabulousMedia" className="h-2.5 md:h-3 w-auto block" />
+            </a>
+            <div className="w-[1px] h-3 bg-slate-200"></div>
+            <a href="https://gocommercially.com" target="_blank" rel="noopener noreferrer" aria-label="GoCommercially" className="flex items-center justify-center bg-white p-1 rounded-md opacity-60 transition-all duration-350 ease-out hover:opacity-100 hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(253,181,20,0.5)]">
+              <img src="https://play.fabulousmedia.in/sitecredit/images/gocommercially.svg" alt="GoCommercially" className="h-2.5 md:h-3 w-auto block" />
+            </a>
+          </div>
         </div>
       </div>
     </footer>
