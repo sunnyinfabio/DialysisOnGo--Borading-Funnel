@@ -842,7 +842,7 @@ export default function Home() {
       {showFormModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden" style={{ perspective: '1000px' }}>
           {/* Backdrop */}
-          <div className="absolute inset-0 bg-slate-900/90 backdrop-blur-xl animate-in fade-in duration-700" onClick={() => setShowFormModal(false)}></div>
+          <div className="absolute inset-0 bg-slate-900 animate-in fade-in duration-700" onClick={() => setShowFormModal(false)}></div>
           
           {/* Header & Progress */}
           <div className="absolute top-0 left-0 w-full p-8 flex justify-between items-center z-20 animate-in fade-in slide-in-from-top-10 duration-700">
@@ -861,7 +861,7 @@ export default function Home() {
           </div>
           
           {/* Main Content Area */}
-          <div className="w-full max-w-5xl relative z-10 px-6 form-step-container">
+          <div className="w-full max-w-4xl relative z-10 p-10 md:p-16 bg-slate-800 rounded-3xl border border-slate-700 shadow-2xl form-step-container">
             {formStep === 0 && (
               <div>
                 <div className="flex items-center gap-4 mb-8">
