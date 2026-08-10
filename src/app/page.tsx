@@ -214,7 +214,7 @@ export default function Home() {
         { innerHTML: 0 },
         { 
           scrollTrigger: { trigger: ".trust-banner", start: "top 90%" },
-          innerHTML: (i, el) => el.getAttribute('data-val'),
+          innerHTML: (i: number, el: Element) => el.getAttribute('data-val'),
           duration: 2,
           snap: { innerHTML: 1 },
           ease: "power2.out",
