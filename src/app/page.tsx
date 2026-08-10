@@ -30,6 +30,7 @@ export default function Home() {
   // Phase 2 States
   const [showFormModal, setShowFormModal] = useState(false);
   const [formStep, setFormStep] = useState(0);
+  const [locationError, setLocationError] = useState(false);
 
   // Cinematic Form Logic
   useEffect(() => {
@@ -50,6 +51,23 @@ export default function Home() {
   }, [showFormModal, formStep]);
 
   const handleNextStep = () => {
+    if (formStep === 1) {
+      const input = document.querySelector('.cinematic-input') as HTMLInputElement;
+      if (input) {
+        const val = input.value.toLowerCase();
+        // Check if any valid state is mentioned
+        const isValid = cities.some(city => val.includes(city.state.toLowerCase()) || val.includes(city.name.toLowerCase()));
+        
+        if (!isValid) {
+          setLocationError(true);
+          // Auto-hide error after 4 seconds
+          setTimeout(() => setLocationError(false), 4000);
+          return;
+        }
+      }
+    }
+
+    setLocationError(false);
     gsap.to('.form-step-container', { 
       z: -100, 
       opacity: 0, 
@@ -822,7 +840,7 @@ export default function Home() {
             )}
             
             {formStep === 1 && (
-              <div>
+              <div className="relative">
                 <div className="flex items-center gap-4 mb-8">
                   <span className="flex items-center justify-center w-8 h-8 rounded bg-primary/20 text-primary font-bold text-sm">2</span>
                   <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Location</span>
@@ -834,6 +852,18 @@ export default function Home() {
                   <span className="px-2 py-1 rounded bg-white/10 font-bold text-sm text-white">Enter ↵</span>
                   <span>to continue</span>
                 </div>
+
+                {/* Error Popup */}
+                {locationError && (
+                  <div className="absolute top-full left-0 mt-8 bg-red-500/10 border border-red-500/30 text-red-400 p-6 rounded-2xl animate-in slide-in-from-bottom-5 fade-in duration-300 w-full max-w-lg shadow-[0_0_40px_rgba(239,68,68,0.15)]">
+                    <h4 className="font-bold text-xl mb-2 flex items-center gap-2">
+                      <span>🚧</span> Expanding Soon!
+                    </h4>
+                    <p className="text-red-300/80 leading-relaxed">
+                      We currently don't operate in your region. DialysisOnGo is aggressively expanding across India. Please leave your details with us and we'll notify you!
+                    </p>
+                  </div>
+                )}
               </div>
             )}
             
