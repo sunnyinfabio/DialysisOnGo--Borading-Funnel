@@ -39,14 +39,15 @@ export default function Home() {
   const totalSteps = 5;
   const [selectedState, setSelectedState] = useState("");
   const [formData, setFormData] = useState({ name: '', center: '', email: '', phone: '' });
+  const [consentChecked, setConsentChecked] = useState(false);
 
   const validateStep = (step: number) => {
     switch(step) {
-      case 0: return formData.name.trim().length > 0;
+      case 0: return /^[a-zA-Z\s]+$/.test(formData.name.trim()) && formData.name.trim().length >= 2;
       case 1: return formData.center.trim().length > 0;
-      case 2: return formData.email.trim().length > 0 && formData.email.includes('@');
-      case 3: return formData.phone.trim().length > 0;
-      case 4: return selectedState !== "" && selectedState !== "other";
+      case 2: return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim());
+      case 3: return /^\+?[\d\s-]{10,}$/.test(formData.phone.trim());
+      case 4: return selectedState !== "" && selectedState !== "other" && consentChecked;
       default: return false;
     }
   };
@@ -974,11 +975,21 @@ export default function Home() {
                   <div className="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none text-white/50 text-2xl">▼</div>
                 </div>
 
+                <div className="mt-8 flex items-center gap-3">
+                  <label className="flex items-center gap-3 cursor-pointer group">
+                    <div className={`w-6 h-6 rounded border-2 flex items-center justify-center transition-colors ${consentChecked ? 'bg-primary border-primary' : 'border-white/30 group-hover:border-white/50'}`}>
+                      {consentChecked && <span className="text-white text-sm font-bold">✓</span>}
+                    </div>
+                    <input type="checkbox" className="hidden" checked={consentChecked} onChange={(e) => setConsentChecked(e.target.checked)} />
+                    <span className="text-white/70 text-lg group-hover:text-white transition-colors">I verify these details and consent to joining the network.</span>
+                  </label>
+                </div>
+
                 <div className="mt-12">
                   <button 
                     onClick={handleNextStep}
-                    disabled={!selectedState}
-                    className={`px-10 py-5 rounded-full font-bold text-xl transition-all shadow-lg ${!selectedState ? 'bg-white/10 text-white/30 cursor-not-allowed' : 'bg-primary text-white hover:bg-primary-hover hover:scale-105'}`}
+                    disabled={!validateStep(4)}
+                    className={`px-10 py-5 rounded-full font-bold text-xl transition-all shadow-lg ${!validateStep(4) ? 'bg-white/10 text-white/30 cursor-not-allowed' : 'bg-primary text-white hover:bg-primary-hover hover:scale-105'}`}
                   >
                     Submit Details →
                   </button>
