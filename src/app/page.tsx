@@ -34,37 +34,18 @@ export default function Home() {
 
   // Cinematic Form Logic
   const activeStates = Array.from(new Set(cities.map(c => c.state)));
-  const totalSteps = 6;
+  const totalSteps = 5;
+  const [selectedState, setSelectedState] = useState("");
 
   useEffect(() => {
     if (!showFormModal) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setShowFormModal(false);
       
-      // Text Input Steps: 0 (Name), 2 (Contact), 3 (Phone), 4 (Email)
-      if ([0, 2, 3, 4].includes(formStep) && e.key === 'Enter') {
+      // Text Input Steps: 0 to 3
+      if ([0, 1, 2, 3].includes(formStep) && e.key === 'Enter') {
         const input = document.querySelector('.cinematic-input') as HTMLInputElement;
         if (input && input.value.trim().length > 0) handleNextStep();
-      }
-      
-      // State Selection (Step 1)
-      if (formStep === 1) {
-        // User can press 1-9 or 0 for 10th option
-        let key = parseInt(e.key);
-        if (e.key === '0') key = 10;
-        if (key >= 1 && key <= activeStates.length + 1) {
-          if (key === activeStates.length + 1) {
-            triggerLocationError();
-          } else {
-            handleNextStep();
-          }
-        }
-      }
-
-      // Capacity Selection (Step 5)
-      if (formStep === 5) {
-        const key = parseInt(e.key);
-        if (key >= 1 && key <= 4) handleNextStep();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -77,6 +58,14 @@ export default function Home() {
   };
 
   const handleNextStep = () => {
+    if (formStep === 4) {
+      if (!selectedState) return;
+      if (selectedState === 'other') {
+        triggerLocationError();
+        return;
+      }
+    }
+
     setLocationError(false);
     gsap.to('.form-step-container', { 
       z: -100, 
@@ -837,10 +826,10 @@ export default function Home() {
               <div>
                 <div className="flex items-center gap-4 mb-8">
                   <span className="flex items-center justify-center w-8 h-8 rounded bg-primary/20 text-primary font-bold text-sm">1</span>
-                  <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Let's begin</span>
+                  <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Contact</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-tight">What is the <span className="text-primary italic">name</span> of your center?</h2>
-                <input type="text" placeholder="Type your answer here..." className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors placeholder:text-white/20" autoFocus onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.value.trim() !== '' && handleNextStep()} />
+                <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-tight">What is your <span className="text-primary italic">full name?</span></h2>
+                <input type="text" placeholder="e.g. Rahul Sharma" className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors placeholder:text-white/20" autoFocus onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.value.trim() !== '' && handleNextStep()} />
                 <div className="mt-8 flex items-center gap-4 text-white/50 animate-pulse">
                   <span>Press</span>
                   <span className="px-2 py-1 rounded bg-white/10 font-bold text-sm text-white">Enter ↵</span>
@@ -850,36 +839,18 @@ export default function Home() {
             )}
             
             {formStep === 1 && (
-              <div className="relative">
+              <div>
                 <div className="flex items-center gap-4 mb-8">
                   <span className="flex items-center justify-center w-8 h-8 rounded bg-primary/20 text-primary font-bold text-sm">2</span>
-                  <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Location</span>
+                  <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Center</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-tight">Where are you <span className="text-primary italic">located?</span></h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {activeStates.map((state, idx) => (
-                    <button key={state} onClick={handleNextStep} className="group relative flex items-center gap-4 p-4 border border-white/10 rounded-2xl bg-white/5 hover:bg-white/10 hover:border-primary transition-all text-left">
-                      <span className="flex items-center justify-center w-6 h-6 rounded bg-white/10 text-white font-bold text-xs group-hover:bg-primary transition-colors">{idx + 1}</span>
-                      <span className="text-lg font-bold text-white">{state}</span>
-                    </button>
-                  ))}
-                  <button onClick={triggerLocationError} className="group relative flex items-center gap-4 p-4 border border-white/10 rounded-2xl bg-white/5 hover:bg-white/10 hover:border-white transition-all text-left">
-                    <span className="flex items-center justify-center w-6 h-6 rounded bg-white/10 text-white font-bold text-xs group-hover:bg-white group-hover:text-black transition-colors">{activeStates.length + 1 === 10 ? '0' : activeStates.length + 1}</span>
-                    <span className="text-lg font-bold text-white/60">Other State</span>
-                  </button>
+                <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-tight">What is the <span className="text-primary italic">name</span> of your center?</h2>
+                <input type="text" placeholder="e.g. City Hospital Dialysis Unit" className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors placeholder:text-white/20" autoFocus onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.value.trim() !== '' && handleNextStep()} />
+                <div className="mt-8 flex items-center gap-4 text-white/50 animate-pulse">
+                  <span>Press</span>
+                  <span className="px-2 py-1 rounded bg-white/10 font-bold text-sm text-white">Enter ↵</span>
+                  <span>to continue</span>
                 </div>
-
-                {/* Error Popup */}
-                {locationError && (
-                  <div className="absolute top-full left-0 mt-8 bg-red-500/10 border border-red-500/30 text-red-400 p-6 rounded-2xl animate-in slide-in-from-bottom-5 fade-in duration-300 w-full shadow-[0_0_40px_rgba(239,68,68,0.15)] z-50">
-                    <h4 className="font-bold text-xl mb-2 flex items-center gap-2">
-                      <span>🚧</span> Expanding Soon!
-                    </h4>
-                    <p className="text-red-300/80 leading-relaxed">
-                      We currently don't operate in your region. DialysisOnGo is aggressively expanding across India. Please leave your details with us and we'll notify you!
-                    </p>
-                  </div>
-                )}
               </div>
             )}
 
@@ -887,10 +858,10 @@ export default function Home() {
               <div>
                 <div className="flex items-center gap-4 mb-8">
                   <span className="flex items-center justify-center w-8 h-8 rounded bg-primary/20 text-primary font-bold text-sm">3</span>
-                  <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Contact</span>
+                  <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Email</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-tight">What is your <span className="text-primary italic">full name?</span></h2>
-                <input type="text" placeholder="e.g. Rahul Sharma" className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors placeholder:text-white/20" autoFocus onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.value.trim() !== '' && handleNextStep()} />
+                <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-tight">What is your <span className="text-primary italic">email address?</span></h2>
+                <input type="email" placeholder="hello@example.com" className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors placeholder:text-white/20" autoFocus onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.value.trim() !== '' && handleNextStep()} />
                 <div className="mt-8 flex items-center gap-4 text-white/50 animate-pulse">
                   <span>Press</span>
                   <span className="px-2 py-1 rounded bg-white/10 font-bold text-sm text-white">Enter ↵</span>
@@ -914,49 +885,57 @@ export default function Home() {
                 </div>
               </div>
             )}
-
+            
             {formStep === 4 && (
-              <div>
+              <div className="relative">
                 <div className="flex items-center gap-4 mb-8">
                   <span className="flex items-center justify-center w-8 h-8 rounded bg-primary/20 text-primary font-bold text-sm">5</span>
-                  <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Email</span>
+                  <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Location</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-tight">What is your <span className="text-primary italic">email address?</span></h2>
-                <input type="email" placeholder="hello@example.com" className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors placeholder:text-white/20" autoFocus onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.value.trim() !== '' && handleNextStep()} />
-                <div className="mt-8 flex items-center gap-4 text-white/50 animate-pulse">
-                  <span>Press</span>
-                  <span className="px-2 py-1 rounded bg-white/10 font-bold text-sm text-white">Enter ↵</span>
-                  <span>to continue</span>
+                <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-tight">Where are you <span className="text-primary italic">located?</span></h2>
+                
+                <div className="max-w-2xl">
+                  <select 
+                    value={selectedState} 
+                    onChange={(e) => { setSelectedState(e.target.value); setLocationError(false); }}
+                    className="w-full text-2xl md:text-4xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors appearance-none cursor-pointer"
+                  >
+                    <option value="" disabled className="bg-slate-900">Select your state...</option>
+                    {activeStates.map(state => (
+                      <option key={state} value={state} className="bg-slate-900 text-lg py-2">{state}</option>
+                    ))}
+                    <option value="other" className="bg-slate-900 text-lg py-2 text-white/50">Other / Not Listed</option>
+                  </select>
+                  
+                  {/* Custom Arrow for Select */}
+                  <div className="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none text-white/50 text-2xl">▼</div>
                 </div>
+
+                <div className="mt-12">
+                  <button 
+                    onClick={handleNextStep}
+                    disabled={!selectedState}
+                    className={`px-10 py-5 rounded-full font-bold text-xl transition-all shadow-lg ${!selectedState ? 'bg-white/10 text-white/30 cursor-not-allowed' : 'bg-primary text-white hover:bg-primary-hover hover:scale-105'}`}
+                  >
+                    Submit Details →
+                  </button>
+                </div>
+
+                {/* Error Popup */}
+                {locationError && (
+                  <div className="absolute top-full left-0 mt-8 bg-red-500/10 border border-red-500/30 text-red-400 p-6 rounded-2xl animate-in slide-in-from-bottom-5 fade-in duration-300 w-full shadow-[0_0_40px_rgba(239,68,68,0.15)] z-50">
+                    <h4 className="font-bold text-xl mb-2 flex items-center gap-2">
+                      <span>🚧</span> Expanding Soon!
+                    </h4>
+                    <p className="text-red-300/80 leading-relaxed">
+                      We currently don't operate in your region. DialysisOnGo is aggressively expanding across India. Please leave your details with us and we'll notify you!
+                    </p>
+                  </div>
+                )}
               </div>
             )}
             
             {formStep === 5 && (
-              <div>
-                <div className="flex items-center gap-4 mb-8">
-                  <span className="flex items-center justify-center w-8 h-8 rounded bg-primary/20 text-primary font-bold text-sm">6</span>
-                  <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Capacity</span>
-                </div>
-                <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-tight">How many active dialysis machines do you have?</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {[ '1-5', '6-10', '11-20', '20+' ].map((num, idx) => (
-                    <button key={num} onClick={handleNextStep} className="group relative flex items-center gap-6 p-6 border border-white/10 rounded-2xl bg-white/5 hover:bg-white/10 hover:border-primary transition-all text-left">
-                      <span className="flex items-center justify-center w-8 h-8 rounded bg-white/10 text-white font-bold text-sm group-hover:bg-primary transition-colors">{idx + 1}</span>
-                      <span className="text-2xl font-bold text-white">{num} machines</span>
-                    </button>
-                  ))}
-                </div>
-                <div className="mt-8 flex items-center gap-4 text-white/50">
-                  <span>Press</span>
-                  <span className="px-2 py-1 rounded bg-white/10 font-bold text-sm text-white">1</span>
-                  <span>-</span>
-                  <span className="px-2 py-1 rounded bg-white/10 font-bold text-sm text-white">4</span>
-                  <span>to select an option</span>
-                </div>
-              </div>
-            )}
-            
-            {formStep === 6 && (
               <div className="text-center">
                 <div className="relative w-32 h-32 mx-auto mb-10">
                   <svg className="w-full h-full text-green-400" viewBox="0 0 100 100">
