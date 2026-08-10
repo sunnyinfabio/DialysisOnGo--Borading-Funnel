@@ -5,45 +5,69 @@ import Globe from "react-globe.gl";
 
 export default function GlobeComponent() {
   const globeRef = useRef<any>(null);
-  const [arcsData, setArcsData] = useState<any[]>([]);
+  const [countries, setCountries] = useState({ features: [] });
+  const [windowWidth, setWindowWidth] = useState(600);
 
   useEffect(() => {
-    // Generate some mock patient flight paths targeting India region
-    const arcs = [];
-    for (let i = 0; i < 30; i++) {
-      arcs.push({
-        startLat: (Math.random() - 0.5) * 60 + 20, 
-        startLng: (Math.random() - 0.5) * 60 + 80,
-        endLat: 20 + (Math.random() - 0.5) * 15,
-        endLng: 80 + (Math.random() - 0.5) * 15,
-        color: ['#e12454', '#0a1f44'][Math.round(Math.random())]
-      });
-    }
-    setArcsData(arcs);
+    // Handle window resize for globe responsiveness
+    const handleResize = () => setWindowWidth(Math.min(window.innerWidth - 48, 600));
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    
+    // Fetch India GeoJSON data
+    fetch('https://raw.githubusercontent.com/Subhash9325/GeoJson-Data-of-Indian-States/master/Indian_States')
+      .then(res => res.json())
+      .then(data => setCountries(data))
+      .catch(err => console.error("Could not load map data", err));
 
     if (globeRef.current) {
+      // Fix perspective to focus completely on India
       globeRef.current.controls().autoRotate = true;
-      globeRef.current.controls().autoRotateSpeed = 1.5;
+      globeRef.current.controls().autoRotateSpeed = 0.5;
       globeRef.current.controls().enableZoom = false;
-      globeRef.current.pointOfView({ lat: 20, lng: 80, altitude: 2 });
+      globeRef.current.pointOfView({ lat: 21, lng: 82, altitude: 0.8 }, 1000);
     }
+    
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const cities = [
+    { name: "Delhi", lat: 28.6139, lng: 77.2090 },
+    { name: "Mumbai", lat: 19.0760, lng: 72.8777 },
+    { name: "Bangalore", lat: 12.9716, lng: 77.5946 },
+    { name: "Goa", lat: 15.2993, lng: 74.1240 },
+    { name: "Udaipur", lat: 24.5854, lng: 73.7125 },
+    { name: "Amritsar", lat: 31.6340, lng: 74.8723 },
+    { name: "Gurugram", lat: 28.4595, lng: 77.0266 },
+    { name: "Katra", lat: 32.9906, lng: 74.9319 }
+  ];
 
   return (
     <div className="flex items-center justify-center cursor-move h-full w-full">
       <Globe
         ref={globeRef}
-        width={600}
+        width={windowWidth}
         height={600}
-        globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
-        bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
+        showGlobe={false} // Hide the earth sphere to only show polygons
+        showAtmosphere={false}
         backgroundColor="rgba(0,0,0,0)"
-        arcsData={arcsData}
-        arcColor="color"
-        arcDashLength={0.4}
-        arcDashGap={0.2}
-        arcDashAnimateTime={1500}
-        arcsTransitionDuration={0}
+        
+        // India Polygons
+        polygonsData={countries.features}
+        polygonAltitude={0.02}
+        polygonCapColor={() => '#e12454'} // Primary color
+        polygonSideColor={() => 'rgba(225, 36, 84, 0.2)'}
+        polygonStrokeColor={() => '#ffffff'}
+        
+        // Serving Cities Labels
+        labelsData={cities}
+        labelLat={d => (d as any).lat}
+        labelLng={d => (d as any).lng}
+        labelText={d => (d as any).name}
+        labelSize={1.5}
+        labelDotRadius={0.5}
+        labelColor={() => 'white'}
+        labelResolution={2}
       />
     </div>
   );

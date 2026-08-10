@@ -672,9 +672,9 @@ export default function Home() {
       <section className="py-24 bg-black text-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="z-10">
-            <span className="inline-block tracking-widest uppercase text-sm font-bold text-primary mb-4 bg-primary/10 px-4 py-1.5 rounded-full">Global Reach</span>
-            <h2 className="text-4xl md:text-5xl font-black mb-6">Patients are traveling. Are you ready?</h2>
-            <p className="text-xl opacity-80 mb-8 leading-relaxed">Watch as patients from across the globe plan their medical travel to verified DialysisOnGo centers.</p>
+            <span className="inline-block tracking-widest uppercase text-sm font-bold text-primary mb-4 bg-primary/10 px-4 py-1.5 rounded-full">Pan-India Reach</span>
+            <h2 className="text-4xl md:text-5xl font-black mb-6">Patients across India are traveling. Are you ready?</h2>
+            <p className="text-xl opacity-80 mb-8 leading-relaxed">Watch as patients from across India plan their medical travel to verified DialysisOnGo centers.</p>
             <div className="flex items-center gap-6">
               <div>
                 <div className="text-3xl font-black text-primary">2.4k+</div>
@@ -682,8 +682,8 @@ export default function Home() {
               </div>
               <div className="w-px h-12 bg-white/20"></div>
               <div>
-                <div className="text-3xl font-black text-primary">15+</div>
-                <div className="text-sm opacity-60 uppercase tracking-widest font-bold mt-1">Countries</div>
+                <div className="text-3xl font-black text-primary">28+</div>
+                <div className="text-sm opacity-60 uppercase tracking-widest font-bold mt-1">States</div>
               </div>
             </div>
           </div>
