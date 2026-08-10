@@ -31,6 +31,40 @@ export default function Home() {
   const [showFormModal, setShowFormModal] = useState(false);
   const [formStep, setFormStep] = useState(0);
 
+  // Cinematic Form Logic
+  useEffect(() => {
+    if (!showFormModal) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowFormModal(false);
+      if (formStep < 2 && e.key === 'Enter') {
+        const input = document.querySelector('.cinematic-input') as HTMLInputElement;
+        if (input && input.value.trim().length > 0) handleNextStep();
+      }
+      if (formStep === 2) {
+        const key = parseInt(e.key);
+        if (key >= 1 && key <= 4) handleNextStep();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showFormModal, formStep]);
+
+  const handleNextStep = () => {
+    gsap.to('.form-step-container', { 
+      z: -100, 
+      opacity: 0, 
+      duration: 0.4, 
+      ease: 'power2.in',
+      onComplete: () => {
+        setFormStep(s => s + 1);
+        gsap.fromTo('.form-step-container', 
+          { z: 100, opacity: 0 }, 
+          { z: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }
+        );
+      }
+    });
+  };
+
   const handleSimulate = () => {
     if (simulating) return;
     setSimulating(true);
@@ -747,62 +781,103 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Conversational Form Modal */}
+      {/* Cinematic Full-Screen Form */}
       {showFormModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowFormModal(false)}></div>
-          <div className="bg-white rounded-3xl w-full max-w-lg relative z-10 shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
-            <div className="h-2 bg-surface relative">
-              <div className="absolute top-0 left-0 h-full bg-primary transition-all duration-500" style={{ width: `${(formStep / 3) * 100}%` }}></div>
-            </div>
-            
-            <div className="p-10 min-h-[400px] flex flex-col">
-              <button className="absolute top-6 right-6 text-text-muted hover:text-black font-bold text-xl" onClick={() => setShowFormModal(false)}>✕</button>
-              
-              <div className="flex-1 flex flex-col justify-center relative">
-                {formStep === 0 && (
-                  <div className="animate-in slide-in-from-right fade-in duration-500">
-                    <span className="text-primary font-bold text-sm uppercase tracking-widest mb-4 block">Let's begin</span>
-                    <h2 className="text-3xl font-black text-secondary mb-8">What is the name of your center?</h2>
-                    <input type="text" placeholder="e.g. Apollo Dialysis Clinic" className="w-full text-2xl border-b-2 border-border focus:border-primary outline-none py-4 bg-transparent font-medium text-secondary transition-colors" autoFocus />
-                  </div>
-                )}
-                {formStep === 1 && (
-                  <div className="animate-in slide-in-from-right fade-in duration-500">
-                    <span className="text-primary font-bold text-sm uppercase tracking-widest mb-4 block">Location</span>
-                    <h2 className="text-3xl font-black text-secondary mb-8">Where are you located?</h2>
-                    <input type="text" placeholder="e.g. Mumbai, Maharashtra" className="w-full text-2xl border-b-2 border-border focus:border-primary outline-none py-4 bg-transparent font-medium text-secondary transition-colors" autoFocus />
-                  </div>
-                )}
-                {formStep === 2 && (
-                  <div className="animate-in slide-in-from-right fade-in duration-500">
-                    <span className="text-primary font-bold text-sm uppercase tracking-widest mb-4 block">Capacity</span>
-                    <h2 className="text-3xl font-black text-secondary mb-8">How many active dialysis machines do you have?</h2>
-                    <div className="grid grid-cols-2 gap-4">
-                      {[ '1-5', '6-10', '11-20', '20+' ].map(num => (
-                        <button key={num} onClick={() => setFormStep(3)} className="py-4 border-2 border-border rounded-xl font-bold hover:border-primary hover:bg-primary/5 transition-all text-secondary">{num}</button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {formStep === 3 && (
-                  <div className="animate-in zoom-in fade-in duration-500 text-center">
-                    <div className="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">✓</div>
-                    <h2 className="text-3xl font-black text-secondary mb-4">You're Eligible!</h2>
-                    <p className="text-text-muted mb-8">Based on your answers, your center is a perfect fit for the DialysisOnGo network.</p>
-                    <button onClick={() => setShowFormModal(false)} className="w-full bg-secondary hover:bg-black text-white font-bold py-4 rounded-xl transition-colors">Complete Profile Dashboard →</button>
-                  </div>
-                )}
+        <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden" style={{ perspective: '1000px' }}>
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-slate-900/90 backdrop-blur-xl animate-in fade-in duration-700" onClick={() => setShowFormModal(false)}></div>
+          
+          {/* Header & Progress */}
+          <div className="absolute top-0 left-0 w-full p-8 flex justify-between items-center z-20 animate-in fade-in slide-in-from-top-10 duration-700">
+            <div className="text-2xl font-black text-white tracking-tight">Dialysis<span className="text-primary">OnGo</span></div>
+            <div className="flex items-center gap-6">
+              {/* Circular SVG Progress */}
+              <div className="relative w-12 h-12 flex items-center justify-center">
+                <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="6" />
+                  <circle cx="50" cy="50" r="45" fill="none" stroke="#e12454" strokeWidth="6" strokeDasharray="283" strokeDashoffset={283 - (283 * (formStep / 3))} className="transition-all duration-700 ease-out" />
+                </svg>
+                <span className="absolute text-white font-bold text-sm">{formStep}/3</span>
               </div>
-              
-              {formStep < 2 && (
-                <div className="mt-8 flex justify-end">
-                  <button onClick={() => setFormStep(f => f + 1)} className="bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-full font-bold shadow-lg flex items-center gap-2 transition-transform hover:-translate-y-1">
-                    Continue <span>→</span>
-                  </button>
-                </div>
-              )}
+              <button className="text-white/50 hover:text-white font-bold text-xl transition-colors" onClick={() => setShowFormModal(false)}>✕</button>
             </div>
+          </div>
+          
+          {/* Main Content Area */}
+          <div className="w-full max-w-4xl relative z-10 px-6 form-step-container">
+            {formStep === 0 && (
+              <div>
+                <div className="flex items-center gap-4 mb-8">
+                  <span className="flex items-center justify-center w-8 h-8 rounded bg-primary/20 text-primary font-bold text-sm">1</span>
+                  <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Let's begin</span>
+                </div>
+                <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-tight">What is the <span className="text-primary italic">name</span> of your center?</h2>
+                <input type="text" placeholder="Type your answer here..." className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors placeholder:text-white/20" autoFocus onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.value.trim() !== '' && handleNextStep()} />
+                <div className="mt-8 flex items-center gap-4 text-white/50 animate-pulse">
+                  <span>Press</span>
+                  <span className="px-2 py-1 rounded bg-white/10 font-bold text-sm text-white">Enter ↵</span>
+                  <span>to continue</span>
+                </div>
+              </div>
+            )}
+            
+            {formStep === 1 && (
+              <div>
+                <div className="flex items-center gap-4 mb-8">
+                  <span className="flex items-center justify-center w-8 h-8 rounded bg-primary/20 text-primary font-bold text-sm">2</span>
+                  <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Location</span>
+                </div>
+                <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-tight">Where are you <span className="text-primary italic">located?</span></h2>
+                <input type="text" placeholder="e.g. Mumbai, Maharashtra" className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors placeholder:text-white/20" autoFocus onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.value.trim() !== '' && handleNextStep()} />
+                <div className="mt-8 flex items-center gap-4 text-white/50 animate-pulse">
+                  <span>Press</span>
+                  <span className="px-2 py-1 rounded bg-white/10 font-bold text-sm text-white">Enter ↵</span>
+                  <span>to continue</span>
+                </div>
+              </div>
+            )}
+            
+            {formStep === 2 && (
+              <div>
+                <div className="flex items-center gap-4 mb-8">
+                  <span className="flex items-center justify-center w-8 h-8 rounded bg-primary/20 text-primary font-bold text-sm">3</span>
+                  <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Capacity</span>
+                </div>
+                <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-tight">How many active dialysis machines do you have?</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {[ '1-5', '6-10', '11-20', '20+' ].map((num, idx) => (
+                    <button key={num} onClick={handleNextStep} className="group relative flex items-center gap-6 p-6 border border-white/10 rounded-2xl bg-white/5 hover:bg-white/10 hover:border-primary transition-all text-left">
+                      <span className="flex items-center justify-center w-8 h-8 rounded bg-white/10 text-white font-bold text-sm group-hover:bg-primary transition-colors">{idx + 1}</span>
+                      <span className="text-2xl font-bold text-white">{num} machines</span>
+                    </button>
+                  ))}
+                </div>
+                <div className="mt-8 flex items-center gap-4 text-white/50">
+                  <span>Press</span>
+                  <span className="px-2 py-1 rounded bg-white/10 font-bold text-sm text-white">1</span>
+                  <span>-</span>
+                  <span className="px-2 py-1 rounded bg-white/10 font-bold text-sm text-white">4</span>
+                  <span>to select an option</span>
+                </div>
+              </div>
+            )}
+            
+            {formStep === 3 && (
+              <div className="text-center">
+                <div className="relative w-32 h-32 mx-auto mb-10">
+                  <svg className="w-full h-full text-green-400" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="rgba(74, 222, 128, 0.1)" />
+                    <path d="M 30 50 L 45 65 L 70 35" fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" className="animate-[draw_0.5s_ease-out_forwards]" strokeDasharray="100" strokeDashoffset="100" />
+                  </svg>
+                  <style>{`@keyframes draw { to { stroke-dashoffset: 0; } }`}</style>
+                </div>
+                <h2 className="text-5xl md:text-7xl font-black text-white mb-6">You're Eligible!</h2>
+                <p className="text-2xl text-white/60 mb-12 max-w-2xl mx-auto leading-relaxed">Based on your answers, your center is a perfect fit for the DialysisOnGo network.</p>
+                <button onClick={() => setShowFormModal(false)} className="bg-primary hover:bg-primary-hover text-white font-bold text-xl px-12 py-6 rounded-full transition-all hover:scale-105 shadow-[0_0_40px_rgba(225,36,84,0.4)]">
+                  Complete Profile Dashboard →
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
