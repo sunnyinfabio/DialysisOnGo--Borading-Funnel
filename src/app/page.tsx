@@ -558,8 +558,8 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-5 md:px-8">
           <div className="text-center">
             <div className="max-w-3xl mx-auto">
-              <h2 className="text-3xl md:text-5xl font-black text-secondary tracking-tight leading-tight">Dialysis Care in Your Destination</h2>
-              <p className="mt-4 text-text-muted text-base md:text-lg font-medium max-w-xl mx-auto leading-relaxed opacity-90">Find verified centers in popular travel destinations across India.</p>
+              <h2 className="text-3xl md:text-5xl font-black text-secondary tracking-tight leading-tight">Put Your Center on the Travel Map</h2>
+              <p className="mt-4 text-text-muted text-base md:text-lg font-medium max-w-xl mx-auto leading-relaxed opacity-90">Patients are actively searching for dialysis care in top destinations across India. Be the first center they see.</p>
             </div>
           </div>
         </div>
