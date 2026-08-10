@@ -861,25 +861,25 @@ export default function Home() {
           </div>
           
           {/* Main Content Area */}
-          <div className="w-full max-w-4xl relative z-10 p-10 md:p-16 bg-slate-800 rounded-3xl border border-slate-700 shadow-2xl form-step-container">
+          <div className="w-full max-w-4xl relative z-10 p-10 md:p-16 bg-gradient-to-b from-rose-100 via-rose-50 to-white rounded-3xl border border-rose-200 shadow-2xl form-step-container">
             {formStep === 0 && (
               <div>
                 <div className="flex items-center gap-4 mb-8">
                   <span className="flex items-center justify-center w-8 h-8 rounded bg-primary/20 text-primary font-bold text-sm">1</span>
-                  <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Contact</span>
+                  <span className="text-secondary/50 font-bold uppercase tracking-widest text-sm">Contact</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-tight">What is your <span className="text-primary italic">full name?</span></h2>
+                <h2 className="text-4xl md:text-6xl font-black text-secondary mb-12 leading-tight">What is your <span className="text-primary italic">full name?</span></h2>
                 <input 
                   type="text" 
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
                   placeholder="e.g. Rahul Sharma" 
-                  className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors placeholder:text-white/20" 
+                  className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-secondary/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-secondary transition-colors placeholder:text-secondary/30" 
                   autoFocus 
                 />
                 <div className="mt-12 flex items-center gap-6">
-                  <button onClick={() => validateStep(0) && handleNextStep()} disabled={!validateStep(0)} className={`px-8 py-4 rounded-full font-bold text-lg transition-all ${validateStep(0) ? 'bg-primary text-white hover:scale-105' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}>Next →</button>
-                  <div className="flex items-center gap-2 text-white/40 text-sm"><span>or press</span><span className="px-2 py-1 rounded bg-white/10 font-bold">Enter ↵</span></div>
+                  <button onClick={() => validateStep(0) && handleNextStep()} disabled={!validateStep(0)} className={`px-8 py-4 rounded-full font-bold text-lg transition-all ${validateStep(0) ? 'bg-primary text-white hover:scale-105' : 'bg-secondary/10 text-secondary/30 cursor-not-allowed'}`}>Next →</button>
+                  <div className="flex items-center gap-2 text-secondary/50 text-sm"><span>or press</span><span className="px-2 py-1 rounded bg-secondary/10 font-bold">Enter ↵</span></div>
                 </div>
               </div>
             )}
@@ -888,20 +888,20 @@ export default function Home() {
               <div>
                 <div className="flex items-center gap-4 mb-8">
                   <span className="flex items-center justify-center w-8 h-8 rounded bg-primary/20 text-primary font-bold text-sm">2</span>
-                  <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Center</span>
+                  <span className="text-secondary/50 font-bold uppercase tracking-widest text-sm">Center</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-tight">What is the <span className="text-primary italic">name</span> of your center?</h2>
+                <h2 className="text-4xl md:text-6xl font-black text-secondary mb-12 leading-tight">What is the <span className="text-primary italic">name</span> of your center?</h2>
                 <input 
                   type="text" 
                   value={formData.center}
                   onChange={(e) => setFormData({...formData, center: e.target.value})}
                   placeholder="e.g. City Hospital Dialysis Unit" 
-                  className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors placeholder:text-white/20" 
+                  className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-secondary/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-secondary transition-colors placeholder:text-secondary/30" 
                   autoFocus 
                 />
                 <div className="mt-12 flex items-center gap-6">
-                  <button onClick={() => validateStep(1) && handleNextStep()} disabled={!validateStep(1)} className={`px-8 py-4 rounded-full font-bold text-lg transition-all ${validateStep(1) ? 'bg-primary text-white hover:scale-105' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}>Next →</button>
-                  <div className="flex items-center gap-2 text-white/40 text-sm"><span>or press</span><span className="px-2 py-1 rounded bg-white/10 font-bold">Enter ↵</span></div>
+                  <button onClick={() => validateStep(1) && handleNextStep()} disabled={!validateStep(1)} className={`px-8 py-4 rounded-full font-bold text-lg transition-all ${validateStep(1) ? 'bg-primary text-white hover:scale-105' : 'bg-secondary/10 text-secondary/30 cursor-not-allowed'}`}>Next →</button>
+                  <div className="flex items-center gap-2 text-secondary/50 text-sm"><span>or press</span><span className="px-2 py-1 rounded bg-secondary/10 font-bold">Enter ↵</span></div>
                 </div>
               </div>
             )}
@@ -910,20 +910,20 @@ export default function Home() {
               <div>
                 <div className="flex items-center gap-4 mb-8">
                   <span className="flex items-center justify-center w-8 h-8 rounded bg-primary/20 text-primary font-bold text-sm">3</span>
-                  <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Email</span>
+                  <span className="text-secondary/50 font-bold uppercase tracking-widest text-sm">Email</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-tight">What is your <span className="text-primary italic">email address?</span></h2>
+                <h2 className="text-4xl md:text-6xl font-black text-secondary mb-12 leading-tight">What is your <span className="text-primary italic">email address?</span></h2>
                 <input 
                   type="email" 
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
                   placeholder="hello@example.com" 
-                  className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors placeholder:text-white/20" 
+                  className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-secondary/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-secondary transition-colors placeholder:text-secondary/30" 
                   autoFocus 
                 />
                 <div className="mt-12 flex items-center gap-6">
-                  <button onClick={() => validateStep(2) && handleNextStep()} disabled={!validateStep(2)} className={`px-8 py-4 rounded-full font-bold text-lg transition-all ${validateStep(2) ? 'bg-primary text-white hover:scale-105' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}>Next →</button>
-                  <div className="flex items-center gap-2 text-white/40 text-sm"><span>or press</span><span className="px-2 py-1 rounded bg-white/10 font-bold">Enter ↵</span></div>
+                  <button onClick={() => validateStep(2) && handleNextStep()} disabled={!validateStep(2)} className={`px-8 py-4 rounded-full font-bold text-lg transition-all ${validateStep(2) ? 'bg-primary text-white hover:scale-105' : 'bg-secondary/10 text-secondary/30 cursor-not-allowed'}`}>Next →</button>
+                  <div className="flex items-center gap-2 text-secondary/50 text-sm"><span>or press</span><span className="px-2 py-1 rounded bg-secondary/10 font-bold">Enter ↵</span></div>
                 </div>
               </div>
             )}
@@ -932,20 +932,20 @@ export default function Home() {
               <div>
                 <div className="flex items-center gap-4 mb-8">
                   <span className="flex items-center justify-center w-8 h-8 rounded bg-primary/20 text-primary font-bold text-sm">4</span>
-                  <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Phone</span>
+                  <span className="text-secondary/50 font-bold uppercase tracking-widest text-sm">Phone</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-tight">What is your <span className="text-primary italic">phone number?</span></h2>
+                <h2 className="text-4xl md:text-6xl font-black text-secondary mb-12 leading-tight">What is your <span className="text-primary italic">phone number?</span></h2>
                 <input 
                   type="tel" 
                   value={formData.phone}
                   onChange={(e) => setFormData({...formData, phone: e.target.value})}
                   placeholder="+91" 
-                  className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors placeholder:text-white/20" 
+                  className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-secondary/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-secondary transition-colors placeholder:text-secondary/30" 
                   autoFocus 
                 />
                 <div className="mt-12 flex items-center gap-6">
-                  <button onClick={() => validateStep(3) && handleNextStep()} disabled={!validateStep(3)} className={`px-8 py-4 rounded-full font-bold text-lg transition-all ${validateStep(3) ? 'bg-primary text-white hover:scale-105' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}>Next →</button>
-                  <div className="flex items-center gap-2 text-white/40 text-sm"><span>or press</span><span className="px-2 py-1 rounded bg-white/10 font-bold">Enter ↵</span></div>
+                  <button onClick={() => validateStep(3) && handleNextStep()} disabled={!validateStep(3)} className={`px-8 py-4 rounded-full font-bold text-lg transition-all ${validateStep(3) ? 'bg-primary text-white hover:scale-105' : 'bg-secondary/10 text-secondary/30 cursor-not-allowed'}`}>Next →</button>
+                  <div className="flex items-center gap-2 text-secondary/50 text-sm"><span>or press</span><span className="px-2 py-1 rounded bg-secondary/10 font-bold">Enter ↵</span></div>
                 </div>
               </div>
             )}
@@ -954,34 +954,34 @@ export default function Home() {
               <div className="relative">
                 <div className="flex items-center gap-4 mb-8">
                   <span className="flex items-center justify-center w-8 h-8 rounded bg-primary/20 text-primary font-bold text-sm">5</span>
-                  <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Location</span>
+                  <span className="text-secondary/50 font-bold uppercase tracking-widest text-sm">Location</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-tight">Where are you <span className="text-primary italic">located?</span></h2>
+                <h2 className="text-4xl md:text-6xl font-black text-secondary mb-12 leading-tight">Where are you <span className="text-primary italic">located?</span></h2>
                 
-                <div className="max-w-2xl">
+                <div className="max-w-2xl relative">
                   <select 
                     value={selectedState} 
                     onChange={(e) => { setSelectedState(e.target.value); setLocationError(false); }}
-                    className="w-full text-2xl md:text-4xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors appearance-none cursor-pointer"
+                    className="w-full text-2xl md:text-4xl border-b-2 border-secondary/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-secondary transition-colors appearance-none cursor-pointer"
                   >
-                    <option value="" disabled className="bg-slate-900">Select your state...</option>
+                    <option value="" disabled className="bg-white">Select your state...</option>
                     {activeStates.map(state => (
-                      <option key={state} value={state} className="bg-slate-900 text-lg py-2">{state}</option>
+                      <option key={state} value={state} className="bg-white text-secondary text-lg py-2">{state}</option>
                     ))}
-                    <option value="other" className="bg-slate-900 text-lg py-2 text-white/50">Other / Not Listed</option>
+                    <option value="other" className="bg-white text-secondary/50 text-lg py-2">Other / Not Listed</option>
                   </select>
                   
                   {/* Custom Arrow for Select */}
-                  <div className="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none text-white/50 text-2xl">▼</div>
+                  <div className="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none text-secondary/50 text-2xl">▼</div>
                 </div>
 
                 <div className="mt-8 flex items-center gap-3">
                   <label className="flex items-center gap-3 cursor-pointer group">
-                    <div className={`w-6 h-6 rounded border-2 flex items-center justify-center transition-colors ${consentChecked ? 'bg-primary border-primary' : 'border-white/30 group-hover:border-white/50'}`}>
+                    <div className={`w-6 h-6 rounded border-2 flex items-center justify-center transition-colors ${consentChecked ? 'bg-primary border-primary' : 'border-secondary/30 group-hover:border-secondary/50'}`}>
                       {consentChecked && <span className="text-white text-sm font-bold">✓</span>}
                     </div>
                     <input type="checkbox" className="hidden" checked={consentChecked} onChange={(e) => setConsentChecked(e.target.checked)} />
-                    <span className="text-white/70 text-lg group-hover:text-white transition-colors">I verify these details and consent to joining the network.</span>
+                    <span className="text-secondary/70 text-lg group-hover:text-secondary transition-colors">I verify these details and consent to joining the network.</span>
                   </label>
                 </div>
 
@@ -989,7 +989,7 @@ export default function Home() {
                   <button 
                     onClick={handleNextStep}
                     disabled={!validateStep(4)}
-                    className={`px-10 py-5 rounded-full font-bold text-xl transition-all shadow-lg ${!validateStep(4) ? 'bg-white/10 text-white/30 cursor-not-allowed' : 'bg-primary text-white hover:bg-primary-hover hover:scale-105'}`}
+                    className={`px-10 py-5 rounded-full font-bold text-xl transition-all shadow-lg ${!validateStep(4) ? 'bg-secondary/10 text-secondary/30 cursor-not-allowed' : 'bg-primary text-white hover:bg-primary-hover hover:scale-105'}`}
                   >
                     Submit Details →
                   </button>
@@ -1018,8 +1018,8 @@ export default function Home() {
                   </svg>
                   <style>{`@keyframes draw { to { stroke-dashoffset: 0; } }`}</style>
                 </div>
-                <h2 className="text-5xl md:text-7xl font-black text-white mb-6">You're Eligible!</h2>
-                <p className="text-2xl text-white/60 mb-12 max-w-2xl mx-auto leading-relaxed">Based on your answers, your center is a perfect fit for the DialysisOnGo network.</p>
+                <h2 className="text-5xl md:text-7xl font-black text-secondary mb-6">You're Eligible!</h2>
+                <p className="text-2xl text-secondary/60 mb-12 max-w-2xl mx-auto leading-relaxed">Based on your answers, your center is a perfect fit for the DialysisOnGo network.</p>
                 <button onClick={() => setShowFormModal(false)} className="bg-primary hover:bg-primary-hover text-white font-bold text-xl px-12 py-6 rounded-full transition-all hover:scale-105 shadow-[0_0_40px_rgba(225,36,84,0.4)]">
                   Complete Profile Dashboard →
                 </button>
