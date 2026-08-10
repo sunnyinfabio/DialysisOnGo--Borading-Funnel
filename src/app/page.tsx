@@ -38,6 +38,18 @@ export default function Home() {
   const activeStates = Array.from(new Set(cities.map(c => c.state)));
   const totalSteps = 5;
   const [selectedState, setSelectedState] = useState("");
+  const [formData, setFormData] = useState({ name: '', center: '', email: '', phone: '' });
+
+  const validateStep = (step: number) => {
+    switch(step) {
+      case 0: return formData.name.trim().length > 0;
+      case 1: return formData.center.trim().length > 0;
+      case 2: return formData.email.trim().length > 0 && formData.email.includes('@');
+      case 3: return formData.phone.trim().length > 0;
+      case 4: return selectedState !== "" && selectedState !== "other";
+      default: return false;
+    }
+  };
 
   useEffect(() => {
     if (!showFormModal) return;
@@ -46,8 +58,12 @@ export default function Home() {
       
       // Text Input Steps: 0 to 3
       if ([0, 1, 2, 3].includes(formStep) && e.key === 'Enter') {
-        const input = document.querySelector('.cinematic-input') as HTMLInputElement;
-        if (input && input.value.trim().length > 0) handleNextStep();
+        if (validateStep(formStep)) {
+          handleNextStep();
+        } else {
+          // shake animation on invalid
+          gsap.fromTo('.cinematic-input', { x: -10 }, { x: 0, duration: 0.4, ease: 'elastic.out(1, 0.3)' });
+        }
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -852,11 +868,17 @@ export default function Home() {
                   <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Contact</span>
                 </div>
                 <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-tight">What is your <span className="text-primary italic">full name?</span></h2>
-                <input type="text" placeholder="e.g. Rahul Sharma" className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors placeholder:text-white/20" autoFocus onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.value.trim() !== '' && handleNextStep()} />
-                <div className="mt-8 flex items-center gap-4 text-white/50 animate-pulse">
-                  <span>Press</span>
-                  <span className="px-2 py-1 rounded bg-white/10 font-bold text-sm text-white">Enter ↵</span>
-                  <span>to continue</span>
+                <input 
+                  type="text" 
+                  value={formData.name}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  placeholder="e.g. Rahul Sharma" 
+                  className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors placeholder:text-white/20" 
+                  autoFocus 
+                />
+                <div className="mt-12 flex items-center gap-6">
+                  <button onClick={() => validateStep(0) && handleNextStep()} disabled={!validateStep(0)} className={`px-8 py-4 rounded-full font-bold text-lg transition-all ${validateStep(0) ? 'bg-primary text-white hover:scale-105' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}>Next →</button>
+                  <div className="flex items-center gap-2 text-white/40 text-sm"><span>or press</span><span className="px-2 py-1 rounded bg-white/10 font-bold">Enter ↵</span></div>
                 </div>
               </div>
             )}
@@ -868,11 +890,17 @@ export default function Home() {
                   <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Center</span>
                 </div>
                 <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-tight">What is the <span className="text-primary italic">name</span> of your center?</h2>
-                <input type="text" placeholder="e.g. City Hospital Dialysis Unit" className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors placeholder:text-white/20" autoFocus onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.value.trim() !== '' && handleNextStep()} />
-                <div className="mt-8 flex items-center gap-4 text-white/50 animate-pulse">
-                  <span>Press</span>
-                  <span className="px-2 py-1 rounded bg-white/10 font-bold text-sm text-white">Enter ↵</span>
-                  <span>to continue</span>
+                <input 
+                  type="text" 
+                  value={formData.center}
+                  onChange={(e) => setFormData({...formData, center: e.target.value})}
+                  placeholder="e.g. City Hospital Dialysis Unit" 
+                  className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors placeholder:text-white/20" 
+                  autoFocus 
+                />
+                <div className="mt-12 flex items-center gap-6">
+                  <button onClick={() => validateStep(1) && handleNextStep()} disabled={!validateStep(1)} className={`px-8 py-4 rounded-full font-bold text-lg transition-all ${validateStep(1) ? 'bg-primary text-white hover:scale-105' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}>Next →</button>
+                  <div className="flex items-center gap-2 text-white/40 text-sm"><span>or press</span><span className="px-2 py-1 rounded bg-white/10 font-bold">Enter ↵</span></div>
                 </div>
               </div>
             )}
@@ -884,11 +912,17 @@ export default function Home() {
                   <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Email</span>
                 </div>
                 <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-tight">What is your <span className="text-primary italic">email address?</span></h2>
-                <input type="email" placeholder="hello@example.com" className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors placeholder:text-white/20" autoFocus onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.value.trim() !== '' && handleNextStep()} />
-                <div className="mt-8 flex items-center gap-4 text-white/50 animate-pulse">
-                  <span>Press</span>
-                  <span className="px-2 py-1 rounded bg-white/10 font-bold text-sm text-white">Enter ↵</span>
-                  <span>to continue</span>
+                <input 
+                  type="email" 
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  placeholder="hello@example.com" 
+                  className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors placeholder:text-white/20" 
+                  autoFocus 
+                />
+                <div className="mt-12 flex items-center gap-6">
+                  <button onClick={() => validateStep(2) && handleNextStep()} disabled={!validateStep(2)} className={`px-8 py-4 rounded-full font-bold text-lg transition-all ${validateStep(2) ? 'bg-primary text-white hover:scale-105' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}>Next →</button>
+                  <div className="flex items-center gap-2 text-white/40 text-sm"><span>or press</span><span className="px-2 py-1 rounded bg-white/10 font-bold">Enter ↵</span></div>
                 </div>
               </div>
             )}
@@ -900,11 +934,17 @@ export default function Home() {
                   <span className="text-white/50 font-bold uppercase tracking-widest text-sm">Phone</span>
                 </div>
                 <h2 className="text-4xl md:text-6xl font-black text-white mb-12 leading-tight">What is your <span className="text-primary italic">phone number?</span></h2>
-                <input type="tel" placeholder="+91" className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors placeholder:text-white/20" autoFocus onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.value.trim() !== '' && handleNextStep()} />
-                <div className="mt-8 flex items-center gap-4 text-white/50 animate-pulse">
-                  <span>Press</span>
-                  <span className="px-2 py-1 rounded bg-white/10 font-bold text-sm text-white">Enter ↵</span>
-                  <span>to continue</span>
+                <input 
+                  type="tel" 
+                  value={formData.phone}
+                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                  placeholder="+91" 
+                  className="cinematic-input w-full text-3xl md:text-5xl border-b-2 border-white/20 focus:border-primary outline-none py-4 bg-transparent font-medium text-white transition-colors placeholder:text-white/20" 
+                  autoFocus 
+                />
+                <div className="mt-12 flex items-center gap-6">
+                  <button onClick={() => validateStep(3) && handleNextStep()} disabled={!validateStep(3)} className={`px-8 py-4 rounded-full font-bold text-lg transition-all ${validateStep(3) ? 'bg-primary text-white hover:scale-105' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}>Next →</button>
+                  <div className="flex items-center gap-2 text-white/40 text-sm"><span>or press</span><span className="px-2 py-1 rounded bg-white/10 font-bold">Enter ↵</span></div>
                 </div>
               </div>
             )}
