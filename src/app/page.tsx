@@ -737,18 +737,21 @@ export default function Home() {
           </div>
           
           <div className="flex gap-6 overflow-x-auto pb-8 scrollbar-hide snap-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            {[1, 2, 3, 4].map((item) => (
-              <div key={item} className="flex-none w-[300px] h-[400px] relative rounded-3xl overflow-hidden group cursor-pointer snap-center border border-white/10 hover:w-[400px] transition-all duration-700 ease-out">
+            {[
+              { id: 1, city: "City Hospital 1", quote: `"DialysisOnGo brought us 20 new patients last month without us spending a dime on marketing."`, img: "https://dialysisongo-public.s3.ap-south-1.amazonaws.com/superadmins/97bd407d-99ea-4511-8617-13d221a90dc0/4610a0ae-ad80-402c-9edd-d66cd9a86937-harry-singh-mTBc_h93o-U-unsplash.jpg" },
+              { id: 2, city: "City Hospital 2", quote: `"DialysisOnGo brought us 20 new patients last month without us spending a dime on marketing."`, img: "https://dialysisongo-public.s3.ap-south-1.amazonaws.com/superadmins/97bd407d-99ea-4511-8617-13d221a90dc0/f217dc7f-124d-4e8a-a020-40f04ca16c6c-mahadev-ittina-0FXjIXhHSkA-unsplash.jpg" },
+              { id: 3, city: "City Hospital 3", quote: `"DialysisOnGo brought us 20 new patients last month without us spending a dime on marketing."`, img: "https://dialysisongo-public.s3.ap-south-1.amazonaws.com/superadmins/97bd407d-99ea-4511-8617-13d221a90dc0/b2b53434-32a4-4ce6-9eb6-d464be673d49-Gurgaon.jpg" },
+              { id: 4, city: "City Hospital 4", quote: `"DialysisOnGo brought us 20 new patients last month without us spending a dime on marketing."`, img: "https://dialysisongo-public.s3.ap-south-1.amazonaws.com/superadmins/97bd407d-99ea-4511-8617-13d221a90dc0/c5b4c798-659f-448e-8f3e-2efbf6c01928-dishant-thapa-K0s4LcHtOPQ-unsplash.jpg" }
+            ].map((item) => (
+              <div key={item.id} className="flex-none w-[300px] h-[400px] relative rounded-3xl overflow-hidden group cursor-pointer snap-center border border-white/10 hover:w-[400px] transition-all duration-700 ease-out">
                 <div className="absolute inset-0 bg-slate-800">
-                  <Image src={`https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=800&auto=format&fit=crop`} alt="Clinic" fill className="object-cover opacity-50 group-hover:opacity-80 transition-opacity duration-700" />
+                  <Image src={item.img} alt={item.city} fill className="object-cover opacity-50 group-hover:opacity-80 transition-opacity duration-700" />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <div className="w-0 h-0 border-t-8 border-b-8 border-l-[12px] border-t-transparent border-b-transparent border-l-white ml-1"></div>
-                </div>
+                
                 <div className="absolute bottom-6 left-6 right-6">
-                  <h3 className="font-bold text-xl mb-1">City Hospital {item}</h3>
-                  <p className="text-sm opacity-80 line-clamp-2 group-hover:line-clamp-none transition-all">"DialysisOnGo brought us 20 new patients last month without us spending a dime on marketing."</p>
+                  <h3 className="font-bold text-xl mb-1">{item.city}</h3>
+                  <p className="text-sm opacity-80 line-clamp-2 group-hover:line-clamp-none transition-all">{item.quote}</p>
                 </div>
               </div>
             ))}
