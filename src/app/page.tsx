@@ -226,6 +226,16 @@ export default function Home() {
         { y: 50, opacity: 0 },
         { scrollTrigger: { trigger: ".bento-grid", start: "top 80%" }, y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out" }
       );
+      
+      gsap.fromTo(".testimonial-card", 
+        { x: 50, opacity: 0 },
+        { scrollTrigger: { trigger: ".testimonials-container", start: "top 75%" }, x: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power3.out" }
+      );
+
+      gsap.fromTo(".faq-item", 
+        { y: 30, opacity: 0 },
+        { scrollTrigger: { trigger: ".faq-section", start: "top 80%" }, y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power3.out" }
+      );
 
       return () => {
         window.removeEventListener('resize', handleResize);
@@ -246,7 +256,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 w-full relative hero-text pointer-events-auto flex flex-col items-center text-center" style={{ zIndex: 10 }}>
           <span className="inline-block tracking-widest uppercase text-sm font-bold text-primary mb-4 bg-primary/10 px-4 py-1.5 rounded-full">Partner with DialysisOnGo</span>
           
-          <h1 className="text-5xl md:text-7xl md:leading-[1.1] font-black text-[#1a1f2e] max-w-4xl mb-6">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl md:leading-[1.1] font-black text-[#1a1f2e] max-w-4xl mb-6">
             Make your <span className="italic text-[#e12454]">Center</span> easier to discover, <br className="hidden md:block" />
             <span className="font-serif italic font-normal text-slate-600">when patients</span> <span className="font-black text-[#1a1f2e]">travel.</span>
           </h1>
@@ -667,8 +677,8 @@ export default function Home() {
       </section>
 
       {/* 3D Globe Section */}
-      <section className="py-24 bg-black text-white relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <section className="py-20 md:py-24 bg-gradient-to-br from-[#0a0a0a] to-[#1a1a1a] text-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
           <div className="z-10">
             <span className="inline-block tracking-widest uppercase text-sm font-bold text-primary mb-4 bg-primary/10 px-4 py-1.5 rounded-full">Pan-India Reach</span>
             <h2 className="text-4xl md:text-5xl font-black mb-6">Patients across India are traveling. Are you ready?</h2>
@@ -685,8 +695,8 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="h-[400px] md:h-[600px] w-full relative flex items-center justify-center lg:justify-end">
-            <div className="relative w-full h-[120%] -m-10 p-8 flex items-center justify-center">
+          <div className="h-[250px] sm:h-[400px] md:h-[600px] w-full relative flex items-center justify-center lg:justify-end mt-8 lg:mt-0">
+            <div className="relative w-full h-full sm:h-[120%] sm:-m-10 p-4 sm:p-8 flex items-center justify-center">
               <Image 
                 src="/india-map.jpg" 
                 alt="DialysisOnGo India Map" 
@@ -707,14 +717,14 @@ export default function Home() {
             <p className="text-xl opacity-80">Hear from centers that have already transformed their booking flow.</p>
           </div>
           
-          <div className="flex gap-6 overflow-x-auto pb-8 scrollbar-hide snap-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <div className="testimonials-container flex gap-4 md:gap-6 overflow-x-auto pb-8 scrollbar-hide snap-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {[
               { id: 1, city: "Amritsar Care Hospital", quote: `"DialysisOnGo brought us 20 new patients last month without us spending a dime on marketing."`, img: "https://dialysisongo-public.s3.ap-south-1.amazonaws.com/superadmins/97bd407d-99ea-4511-8617-13d221a90dc0/4610a0ae-ad80-402c-9edd-d66cd9a86937-harry-singh-mTBc_h93o-U-unsplash.jpg" },
               { id: 2, city: "LifeLine Dialysis Clinic", quote: `"The platform seamlessly filled our empty afternoon slots with traveling patients. Our revenue has increased by 15%."`, img: "https://dialysisongo-public.s3.ap-south-1.amazonaws.com/superadmins/97bd407d-99ea-4511-8617-13d221a90dc0/f217dc7f-124d-4e8a-a020-40f04ca16c6c-mahadev-ittina-0FXjIXhHSkA-unsplash.jpg" },
               { id: 3, city: "Gurugram Kidney Center", quote: `"Escrow payments and strict cancellation policies mean we never lose out on no-shows. It's a game changer for us."`, img: "https://dialysisongo-public.s3.ap-south-1.amazonaws.com/superadmins/97bd407d-99ea-4511-8617-13d221a90dc0/b2b53434-32a4-4ce6-9eb6-d464be673d49-Gurgaon.jpg" },
               { id: 4, city: "Apex Healthcare Katra", quote: `"Since boarding with DialysisOnGo, managing out-of-town patients has become effortless. Highly recommended!"`, img: "https://dialysisongo-public.s3.ap-south-1.amazonaws.com/superadmins/97bd407d-99ea-4511-8617-13d221a90dc0/c5b4c798-659f-448e-8f3e-2efbf6c01928-dishant-thapa-K0s4LcHtOPQ-unsplash.jpg" }
             ].map((item) => (
-              <div key={item.id} className="flex-none w-[300px] h-[400px] relative rounded-3xl overflow-hidden group cursor-pointer snap-center border border-white/10 hover:w-[400px] transition-all duration-700 ease-out">
+              <div key={item.id} className="testimonial-card flex-none w-[280px] sm:w-[300px] h-[350px] sm:h-[400px] relative rounded-3xl overflow-hidden group cursor-pointer snap-center border border-white/10 hover:w-[320px] sm:hover:w-[400px] transition-all duration-700 ease-out">
                 <div className="absolute inset-0 bg-slate-800">
                   <Image src={item.img} alt={item.city} fill className="object-cover opacity-50 group-hover:opacity-80 transition-opacity duration-700" />
                 </div>
@@ -731,7 +741,7 @@ export default function Home() {
       </section>
 
       {/* FAQ */}
-      <section className="py-24 bg-white">
+      <section className="faq-section py-20 md:py-24 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-3xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-black text-secondary">Frequently Asked Questions</h2>
@@ -743,7 +753,7 @@ export default function Home() {
               { q: "Do I need to change my current software?", a: "No! DialysisOnGo runs alongside your existing HIS/EMR. You will receive booking requests via email and our standalone dashboard." },
               { q: "What if a patient cancels?", a: "We enforce a strict cancellation policy to protect our partner centers. If a patient no-shows without 24 hours notice, you are compensated for the blocked slot." }
             ].map((faq, i) => (
-              <div key={i} className={`border border-border rounded-2xl overflow-hidden transition-all duration-300 ${openFaq === i ? 'ring-2 ring-primary/20 shadow-lg' : 'hover:border-primary/50'}`}>
+              <div key={i} className={`faq-item border border-border rounded-2xl overflow-hidden transition-all duration-300 ${openFaq === i ? 'ring-2 ring-primary/20 shadow-lg bg-white' : 'hover:border-primary/50 bg-white/50'}`}>
                 <button 
                   className="w-full text-left p-6 flex justify-between items-center bg-white"
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
