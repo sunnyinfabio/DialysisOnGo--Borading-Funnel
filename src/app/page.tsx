@@ -10,7 +10,6 @@ import dynamic from 'next/dynamic';
 import Lenis from "lenis";
 import { cities, centers } from "@/lib/data";
 
-const GlobeComponent = dynamic(() => import('@/components/GlobeComponent'), { ssr: false });
 import EligibilityForm from "@/components/EligibilityForm";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -689,7 +688,15 @@ export default function Home() {
           </div>
           <div className="h-[400px] md:h-[600px] w-full relative flex items-center justify-center lg:justify-end">
             <div className="absolute inset-0 pointer-events-none z-10 rounded-full" style={{ boxShadow: 'inset 0 0 100px 50px black' }}></div>
-            <GlobeComponent />
+            <div className="relative w-full h-[120%] -m-10 p-8 flex items-center justify-center">
+              <Image 
+                src="/india-map.jpg" 
+                alt="DialysisOnGo India Map" 
+                fill 
+                className="object-contain object-right drop-shadow-2xl" 
+                priority
+              />
+            </div>
           </div>
         </div>
       </section>
