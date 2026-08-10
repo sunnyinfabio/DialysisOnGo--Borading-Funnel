@@ -25,7 +25,9 @@ export default function Home() {
   const locationMultiplier = isHighVolume ? 1.5 : 1;
   
   const [simulating, setSimulating] = useState(false);
-  const [mockBookings, setMockBookings] = useState(3);
+  const [mockBookings, setMockBookings] = useState(4);
+  const [acceptedBookings, setAcceptedBookings] = useState<number[]>([]);
+  const [showAcceptedPopup, setShowAcceptedPopup] = useState(false);
 
   // Phase 2 States
   const [showFormModal, setShowFormModal] = useState(false);
@@ -503,21 +505,36 @@ export default function Home() {
                             <div className="w-10 h-10 rounded-full bg-slate-200 flex flex-shrink-0"></div>
                             <div>
                               <div className="font-bold text-sm text-secondary">Patient #{1024 + i}</div>
-                              <div className="text-xs text-text-muted">Traveling from {['Delhi', 'Mumbai', 'Rajasthan'][i%3]}</div>
+                              <div className="text-xs text-text-muted">Traveling from {['Delhi', 'Mumbai', 'Rajasthan', 'Delhi'][i%4]}</div>
                             </div>
                           </div>
-                          <button className="text-xs font-bold bg-primary/10 text-primary px-3 py-1.5 rounded hover:bg-primary hover:text-white transition-colors">Accept</button>
+                          <button 
+                            onClick={() => {
+                              if(!acceptedBookings.includes(i)) {
+                                setAcceptedBookings(prev => [...prev, i]);
+                                setShowAcceptedPopup(true);
+                                setTimeout(() => setShowAcceptedPopup(false), 3000);
+                              }
+                            }}
+                            className={`text-xs font-bold px-3 py-1.5 rounded transition-colors ${
+                              acceptedBookings.includes(i) 
+                                ? 'bg-[#e12454] text-white cursor-default' 
+                                : 'bg-primary/10 text-primary hover:bg-primary hover:text-white'
+                            }`}
+                          >
+                            {acceptedBookings.includes(i) ? 'Accepted' : 'Accept'}
+                          </button>
                         </div>
                       ))}
                     </div>
                     
                     {/* Live Toast */}
-                    <div className="mock-toast absolute bottom-6 right-6 left-6 bg-secondary text-white p-4 rounded-xl shadow-2xl flex items-center justify-between opacity-0 pointer-events-none">
+                    <div className={`mock-toast absolute bottom-6 right-6 left-6 bg-secondary text-white p-4 rounded-xl shadow-2xl flex items-center justify-between pointer-events-none transition-all duration-300 z-20 ${showAcceptedPopup ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center text-xl">🎉</div>
+                        <div className="w-8 h-8 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center text-xl">✓</div>
                         <div>
-                          <div className="font-bold text-sm">New Booking Request!</div>
-                          <div className="text-xs opacity-70">A patient wants to visit on Aug 15th.</div>
+                          <div className="font-bold text-sm">Booking Accepted!</div>
+                          <div className="text-xs opacity-70">The patient has been notified.</div>
                         </div>
                       </div>
                     </div>
