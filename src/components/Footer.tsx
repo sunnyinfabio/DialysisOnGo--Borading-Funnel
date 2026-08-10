@@ -12,7 +12,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-[#fffdfd] text-[#4a5568] pt-16 pb-8 border-t border-slate-100">
+    <footer id="contact" className="relative overflow-hidden bg-gradient-to-b from-rose-100/40 via-rose-50/50 to-white border-t border-rose-100/60 transition-colors duration-500 pt-16 pb-8 text-[#4a5568]">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
