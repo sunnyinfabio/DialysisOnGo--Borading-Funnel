@@ -3,11 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import * as THREE from "three";
+import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
-import dynamic from 'next/dynamic';
-import Lenis from "lenis";
 import { cities, centers } from "@/lib/data";
 
 import EligibilityForm from "@/components/EligibilityForm";
