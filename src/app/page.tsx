@@ -736,6 +736,44 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Locations We Serve Section */}
+      <section className="py-32 bg-black text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 mix-blend-overlay"></div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="text-center mb-20">
+            <span className="inline-block tracking-widest uppercase text-sm font-bold text-primary mb-4">Our Network</span>
+            <h2 className="text-5xl md:text-7xl font-black mb-6">Locations We <span className="text-primary italic">Serve.</span></h2>
+            <p className="text-xl opacity-80 max-w-2xl mx-auto leading-relaxed">Join hundreds of verified centers across India's top medical hubs. We are rapidly expanding our footprint to bring quality dialysis care everywhere.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {cities.slice(0, 5).map((city, idx) => (
+              <div key={city.id} className="group relative h-[350px] rounded-3xl overflow-hidden cursor-pointer border border-white/10 hover:border-primary/50 transition-colors duration-500">
+                <Image src={city.image} alt={city.name} fill className="object-cover opacity-50 group-hover:opacity-80 group-hover:scale-110 transition-all duration-700 ease-out" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 w-full p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                  <span className="inline-block px-3 py-1 bg-white/10 backdrop-blur-md rounded-full text-xs font-bold tracking-widest uppercase mb-3 text-white/80">{city.state}</span>
+                  <h3 className="text-3xl font-black text-white">{city.name}</h3>
+                  <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 flex items-center gap-2 text-primary font-bold">
+                    View Centers <span>→</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+            
+            {/* Join Waitlist Card */}
+            <div onClick={() => { setShowFormModal(true); setFormStep(0); }} className="group relative h-[350px] rounded-3xl overflow-hidden cursor-pointer border border-dashed border-white/20 hover:border-primary bg-white/5 hover:bg-primary/5 transition-all duration-500 flex flex-col items-center justify-center p-8 text-center">
+              <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                +
+              </div>
+              <h3 className="text-2xl font-black text-white mb-2">Not in these cities?</h3>
+              <p className="text-white/60 mb-6">We are expanding rapidly. Join our network waitlist to be notified when we launch in your area.</p>
+              <span className="text-primary font-bold group-hover:underline">Join Waitlist →</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Video Testimonials */}
       <section className="py-24 bg-secondary text-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
