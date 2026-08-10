@@ -62,7 +62,7 @@ export default function Home() {
     });
   };
 
-  const handleMagneticMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleMagneticMove = (e: React.MouseEvent<HTMLElement>) => {
     const btn = e.currentTarget;
     const rect = btn.getBoundingClientRect();
     const x = e.clientX - rect.left - rect.width / 2;
@@ -70,7 +70,7 @@ export default function Home() {
     gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: 'power2.out' });
   };
   
-  const handleMagneticLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleMagneticLeave = (e: React.MouseEvent<HTMLElement>) => {
     gsap.to(e.currentTarget, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.3)' });
   };
   
