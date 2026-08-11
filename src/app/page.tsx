@@ -7,7 +7,7 @@ import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
-import { cities, centers } from "@/lib/data";
+import { cities, centers, services } from "@/lib/data";
 
 import EligibilityForm from "@/components/EligibilityForm";
 
@@ -15,18 +15,16 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
   const canvasRef = useRef<HTMLDivElement>(null);
-  const [patientsPerMonth, setPatientsPerMonth] = useState(15);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   // Phase 1 States
   const [centerLocation, setCenterLocation] = useState("");
-  const isHighVolume = ['goa', 'mumbai', 'delhi', 'bangalore', 'udaipur'].some(city => centerLocation.toLowerCase().includes(city));
-  const locationMultiplier = isHighVolume ? 1.5 : 1;
   
   const [simulating, setSimulating] = useState(false);
   const [mockBookings, setMockBookings] = useState(4);
   const [acceptedBookings, setAcceptedBookings] = useState<number[]>([]);
   const [showAcceptedPopup, setShowAcceptedPopup] = useState(false);
+  const [dashboardTab, setDashboardTab] = useState<'bookings' | 'patients' | 'schedules'>('bookings');
 
   // Phase 2 States
   const [showFormModal, setShowFormModal] = useState(false);
@@ -343,57 +341,111 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ROI Calculator */}
-      <section id="roi-calculator" className="py-24 bg-secondary text-white relative overflow-hidden">
+      {/* Care Coordination Section */}
+      <section id="care-coordination" className="py-24 bg-secondary text-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-[100px] pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-4xl md:text-5xl font-black mb-6">Calculate Your Impact</h2>
-              <p className="text-xl opacity-80 mb-10 leading-relaxed">See how joining the DialysisOnGo network can drive additional high-value patients to your center with zero marketing effort.</p>
+              <span className="inline-block tracking-widest uppercase text-sm font-bold text-primary mb-4 bg-primary/10 px-4 py-1.5 rounded-full">Clinical Coordination</span>
+              <h2 className="text-4xl md:text-5xl font-black mb-6">Seamless Care Handoffs.</h2>
+              <p className="text-xl opacity-80 mb-10 leading-relaxed">
+                We eliminate the administrative friction of accepting traveling patients. Get complete, verified medical profiles before the patient even walks through your doors.
+              </p>
               
-              <div className="bg-white/10 p-8 rounded-3xl backdrop-blur-sm border border-white/20">
-                <div className="flex justify-between items-end mb-4">
-                  <label className="font-bold opacity-90">Traveling Patients per Month</label>
-                  <span className="text-3xl font-black text-primary">{patientsPerMonth}</span>
-                </div>
-                <input 
-                  type="range" 
-                  min="1" 
-                  max="100" 
-                  value={patientsPerMonth}
-                  onChange={(e) => setPatientsPerMonth(parseInt(e.target.value))}
-                  className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer accent-primary relative z-10"
-                />
-                
-                {isHighVolume && (
-                  <div className="mt-6 bg-green-500/20 border border-green-400/30 text-green-300 p-4 rounded-xl text-sm font-medium flex items-start gap-3">
-                    <span className="text-lg leading-none">✨</span>
+              <div className="space-y-6">
+                {[
+                  { icon: "📄", title: "Standardized Virology", desc: "Verified recent reports (HIV, HBsAg, HCV) uploaded and checked before booking." },
+                  { icon: "⚕️", title: "Precise Prescriptions", desc: "Dialysate flow, dialyzer type, and dry weight specifications shared directly from the home center." },
+                  { icon: "🔒", title: "Secure Data Transfer", desc: "HIPAA-compliant sharing of medical histories, ensuring patient privacy and center liability protection." }
+                ].map((feature, idx) => (
+                  <div key={idx} className="flex gap-4 items-start bg-white/5 p-4 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
+                    <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center text-2xl shrink-0">{feature.icon}</div>
                     <div>
-                      High Demand Area Detected! Centers in {centerLocation || 'this region'} typically see 50% more volume.
+                      <h4 className="text-lg font-bold mb-1">{feature.title}</h4>
+                      <p className="opacity-70 text-sm leading-relaxed">{feature.desc}</p>
                     </div>
                   </div>
-                )}
+                ))}
               </div>
             </div>
-            <div className="bg-white text-secondary p-10 rounded-[2.5rem] shadow-2xl relative">
-              <div className="absolute -top-6 -right-6 w-24 h-24 bg-primary rounded-full flex items-center justify-center text-white font-black text-xl rotate-12 shadow-xl">
-                ROI
+            
+            <div className="relative">
+              {/* Visual representation of data flow */}
+              <div className="bg-white text-secondary p-8 rounded-[2.5rem] shadow-2xl relative border border-border">
+                <div className="absolute -top-4 -right-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span> Patient Verified
+                </div>
+                <div className="flex items-center gap-4 mb-6 pb-6 border-b border-border">
+                  <div className="w-16 h-16 bg-slate-200 rounded-full flex-shrink-0 overflow-hidden relative">
+                     <div className="absolute inset-0 bg-primary/10 flex items-center justify-center text-primary font-bold text-xl">#</div>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-xl">Patient #4928</h3>
+                    <p className="text-text-muted text-sm">Traveling from {centers[1].name}, {centers[1].city}</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between text-sm mb-1">
+                      <span className="text-text-muted font-medium">Virology Status</span>
+                      <span className="text-green-600 font-bold">Negative (Verified 2 days ago)</span>
+                    </div>
+                    <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                      <div className="bg-green-500 h-full w-full"></div>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4 mt-6">
+                    <div className="bg-surface p-3 rounded-xl border border-border">
+                      <span className="block text-xs text-text-muted uppercase tracking-wider mb-1">Dry Weight</span>
+                      <span className="font-bold text-lg">65.5 kg</span>
+                    </div>
+                    <div className="bg-surface p-3 rounded-xl border border-border">
+                      <span className="block text-xs text-text-muted uppercase tracking-wider mb-1">Blood Flow</span>
+                      <span className="font-bold text-lg">300 ml/min</span>
+                    </div>
+                    <div className="bg-surface p-3 rounded-xl border border-border col-span-2">
+                      <span className="block text-xs text-text-muted uppercase tracking-wider mb-1">Special Instructions</span>
+                      <span className="font-bold text-sm">{services[1].name} required. High flux dialyzer.</span>
+                    </div>
+                  </div>
+                  
+                  <button className="w-full mt-4 bg-primary hover:bg-primary-hover text-white py-3 rounded-xl font-bold transition-colors">
+                    Review Full Prescription
+                  </button>
+                </div>
               </div>
-              <p className="text-text-muted font-bold uppercase tracking-widest text-sm mb-4">Projected Extra Revenue</p>
-              <div className="flex items-baseline gap-2 mb-8">
-                <span className="text-5xl font-black">₹{Math.round(patientsPerMonth * 3500 * locationMultiplier).toLocaleString()}</span>
-                <span className="text-text-muted font-medium">/ month</span>
-              </div>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center gap-3 font-medium"><div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-xs shrink-0">✓</div> Assumes ₹3,500 average per session</li>
-                <li className="flex items-center gap-3 font-medium"><div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-xs shrink-0">✓</div> Automated booking flow</li>
-                <li className="flex items-center gap-3 font-medium"><div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-xs shrink-0">✓</div> Guaranteed payments</li>
-              </ul>
-              <Link href="/onboarding" className="block text-center w-full bg-secondary hover:bg-black text-white py-4 rounded-xl font-bold transition-colors">
-                Start Onboarding
-              </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Network Standards */}
+      <section id="network-standards" className="py-24 bg-white relative">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <span className="inline-block tracking-widest uppercase text-sm font-bold text-primary mb-4 bg-primary/10 px-4 py-1.5 rounded-full">Quality Assurance</span>
+            <h2 className="text-3xl md:text-5xl font-black text-secondary">Global standards. Local care.</h2>
+            <p className="text-xl text-text-muted mt-4 max-w-2xl mx-auto">By joining the DialysisOnGo network, you align your center with a recognized benchmark of quality that patients trust.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { title: "Clinical Protocols", desc: "Standardized protocols for machine disinfection, dialyzer reuse (if applicable), and infection control.", icon: "🏥" },
+              { title: "Water Quality Assurance", desc: "Rigorous adherence to AAMI standards for water treatment systems and RO plants.", icon: "💧" },
+              { title: "Emergency Preparedness", desc: "Mandatory ICU-backup or rapid response agreements with nearby tertiary hospitals for high-risk patients.", icon: "🚑" },
+              { title: "Nephrologist Supervision", desc: "Guaranteed on-call or on-site nephrologist availability during all active sessions.", icon: "👨‍⚕️" },
+              { title: "Staff Training", desc: "Continuous medical education and verification of dialysis technician certifications.", icon: "📚" },
+              { title: "Patient Feedback Loop", desc: "Automated post-session clinical and experiential feedback to maintain center ratings.", icon: "⭐" }
+            ].map((standard, i) => (
+              <div key={i} className="bg-surface p-8 rounded-2xl border border-border hover:border-primary/30 transition-colors group">
+                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform origin-left">{standard.icon}</div>
+                <h3 className="text-xl font-bold text-secondary mb-3">{standard.title}</h3>
+                <p className="text-text-muted leading-relaxed">{standard.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -444,57 +496,128 @@ export default function Home() {
                 <div className="flex flex-1 overflow-hidden">
                   <div className="w-48 border-r border-border bg-surface/50 p-4 hidden sm:block">
                     <div className="space-y-2">
-                      <div className="h-8 bg-primary/10 rounded text-primary font-bold text-xs flex items-center px-3 gap-2"><span className="w-2 h-2 rounded-full bg-primary"></span> Bookings</div>
-                      <div className="h-8 hover:bg-black/5 rounded text-text-muted font-medium text-xs flex items-center px-3">Patients</div>
-                      <div className="h-8 hover:bg-black/5 rounded text-text-muted font-medium text-xs flex items-center px-3">Schedules</div>
+                      <div onClick={() => setDashboardTab('bookings')} className={`h-8 cursor-pointer rounded text-xs font-medium flex items-center px-3 gap-2 transition-colors ${dashboardTab === 'bookings' ? 'bg-primary/10 text-primary font-bold' : 'hover:bg-black/5 text-text-muted'}`}>
+                        {dashboardTab === 'bookings' && <span className="w-2 h-2 rounded-full bg-primary"></span>} Bookings
+                      </div>
+                      <div onClick={() => setDashboardTab('patients')} className={`h-8 cursor-pointer rounded text-xs font-medium flex items-center px-3 gap-2 transition-colors ${dashboardTab === 'patients' ? 'bg-primary/10 text-primary font-bold' : 'hover:bg-black/5 text-text-muted'}`}>
+                        {dashboardTab === 'patients' && <span className="w-2 h-2 rounded-full bg-primary"></span>} Patients
+                      </div>
+                      <div onClick={() => setDashboardTab('schedules')} className={`h-8 cursor-pointer rounded text-xs font-medium flex items-center px-3 gap-2 transition-colors ${dashboardTab === 'schedules' ? 'bg-primary/10 text-primary font-bold' : 'hover:bg-black/5 text-text-muted'}`}>
+                        {dashboardTab === 'schedules' && <span className="w-2 h-2 rounded-full bg-primary"></span>} Schedules
+                      </div>
                     </div>
                   </div>
                   <div className="flex-1 p-6 bg-slate-50 relative overflow-hidden">
-                    <h3 className="font-bold text-secondary mb-6 text-lg flex justify-between items-center">
-                      Pending Requests 
-                      <span className="bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full">{mockBookings}</span>
-                    </h3>
-                    
-                    <div className="space-y-4">
-                      {Array.from({length: mockBookings}).map((_, i) => (
-                        <div key={i} className="bg-white p-4 rounded-xl border border-border shadow-sm flex justify-between items-center">
-                          <div className="flex gap-4 items-center">
-                            <div className="w-10 h-10 rounded-full bg-slate-200 flex flex-shrink-0"></div>
+                    {dashboardTab === 'bookings' && (
+                      <>
+                        <h3 className="font-bold text-secondary mb-6 text-lg flex justify-between items-center">
+                          Pending Requests 
+                          <span className="bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full">{mockBookings}</span>
+                        </h3>
+                        
+                        <div className="space-y-4">
+                          {Array.from({length: mockBookings}).map((_, i) => (
+                            <div key={i} className="bg-white p-4 rounded-xl border border-border shadow-sm flex justify-between items-center">
+                              <div className="flex gap-4 items-center">
+                                <div className="w-10 h-10 rounded-full bg-slate-200 flex flex-shrink-0"></div>
+                                <div>
+                                  <div className="font-bold text-sm text-secondary">Patient #{1024 + i}</div>
+                                  <div className="text-xs text-text-muted">Traveling from {['Delhi', 'Mumbai', 'Rajasthan', 'Delhi'][i%4]}</div>
+                                </div>
+                              </div>
+                              <button 
+                                onClick={() => {
+                                  if(!acceptedBookings.includes(i)) {
+                                    setAcceptedBookings(prev => [...prev, i]);
+                                    setShowAcceptedPopup(true);
+                                    setTimeout(() => setShowAcceptedPopup(false), 3000);
+                                  }
+                                }}
+                                className={`text-xs font-bold px-3 py-1.5 rounded transition-colors ${
+                                  acceptedBookings.includes(i) 
+                                    ? 'bg-[#e12454] text-white cursor-default' 
+                                    : 'bg-primary/10 text-primary hover:bg-primary hover:text-white'
+                                }`}
+                              >
+                                {acceptedBookings.includes(i) ? 'Accepted' : 'Accept'}
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                        
+                        {/* Live Toast */}
+                        <div className={`mock-toast absolute bottom-6 right-6 left-6 bg-secondary text-white p-4 rounded-xl shadow-2xl flex items-center justify-between pointer-events-none transition-all duration-300 z-20 ${showAcceptedPopup ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center text-xl">✓</div>
                             <div>
-                              <div className="font-bold text-sm text-secondary">Patient #{1024 + i}</div>
-                              <div className="text-xs text-text-muted">Traveling from {['Delhi', 'Mumbai', 'Rajasthan', 'Delhi'][i%4]}</div>
+                              <div className="font-bold text-sm">Booking Accepted!</div>
+                              <div className="text-xs opacity-70">The patient has been notified.</div>
                             </div>
                           </div>
-                          <button 
-                            onClick={() => {
-                              if(!acceptedBookings.includes(i)) {
-                                setAcceptedBookings(prev => [...prev, i]);
-                                setShowAcceptedPopup(true);
-                                setTimeout(() => setShowAcceptedPopup(false), 3000);
-                              }
-                            }}
-                            className={`text-xs font-bold px-3 py-1.5 rounded transition-colors ${
-                              acceptedBookings.includes(i) 
-                                ? 'bg-[#e12454] text-white cursor-default' 
-                                : 'bg-primary/10 text-primary hover:bg-primary hover:text-white'
-                            }`}
-                          >
-                            {acceptedBookings.includes(i) ? 'Accepted' : 'Accept'}
-                          </button>
                         </div>
-                      ))}
-                    </div>
-                    
-                    {/* Live Toast */}
-                    <div className={`mock-toast absolute bottom-6 right-6 left-6 bg-secondary text-white p-4 rounded-xl shadow-2xl flex items-center justify-between pointer-events-none transition-all duration-300 z-20 ${showAcceptedPopup ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center text-xl">✓</div>
-                        <div>
-                          <div className="font-bold text-sm">Booking Accepted!</div>
-                          <div className="text-xs opacity-70">The patient has been notified.</div>
+                      </>
+                    )}
+
+                    {dashboardTab === 'patients' && (
+                      <div className="animate-in fade-in slide-in-from-right-4 duration-300">
+                        <h3 className="font-bold text-secondary mb-6 text-lg flex justify-between items-center">
+                          Active Patients
+                        </h3>
+                        <div className="space-y-4">
+                          {[
+                            { id: '#4928', name: 'John Doe', status: 'In Treatment', date: 'Today, 2:00 PM' },
+                            { id: '#4929', name: 'Sarah Smith', status: 'Completed', date: 'Yesterday' },
+                            { id: '#4930', name: 'Michael Raj', status: 'Upcoming', date: 'Tomorrow, 10:00 AM' }
+                          ].map((patient, i) => (
+                            <div key={i} className="bg-white p-4 rounded-xl border border-border shadow-sm flex justify-between items-center">
+                              <div className="flex gap-4 items-center">
+                                <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold">{patient.name.charAt(0)}</div>
+                                <div>
+                                  <div className="font-bold text-sm text-secondary">{patient.name} <span className="text-xs font-normal text-text-muted">({patient.id})</span></div>
+                                  <div className="text-xs text-text-muted">{patient.date}</div>
+                                </div>
+                              </div>
+                              <span className={`text-xs px-2 py-1 rounded-full ${
+                                patient.status === 'In Treatment' ? 'bg-blue-100 text-blue-600' : 
+                                patient.status === 'Completed' ? 'bg-green-100 text-green-600' : 
+                                'bg-yellow-100 text-yellow-600'
+                              }`}>
+                                {patient.status}
+                              </span>
+                            </div>
+                          ))}
                         </div>
                       </div>
-                    </div>
+                    )}
+
+                    {dashboardTab === 'schedules' && (
+                      <div className="animate-in fade-in slide-in-from-bottom-4 duration-300">
+                        <h3 className="font-bold text-secondary mb-6 text-lg flex justify-between items-center">
+                          Upcoming Schedule
+                        </h3>
+                        <div className="bg-white rounded-xl border border-border shadow-sm overflow-hidden">
+                          <div className="grid grid-cols-3 bg-surface p-3 text-xs font-bold text-text-muted uppercase tracking-wider">
+                            <div>Time</div>
+                            <div>Patient</div>
+                            <div>Machine</div>
+                          </div>
+                          <div className="divide-y divide-border">
+                            {[
+                              { time: '08:00 AM', name: 'Patient #4920', machine: 'M-01' },
+                              { time: '10:00 AM', name: 'Patient #4930', machine: 'M-04' },
+                              { time: '02:00 PM', name: 'John Doe', machine: 'M-02' },
+                              { time: '04:30 PM', name: 'Patient #4912', machine: 'M-03' }
+                            ].map((slot, i) => (
+                              <div key={i} className="grid grid-cols-3 p-4 items-center hover:bg-slate-50 transition-colors">
+                                <div className="font-bold text-sm text-secondary">{slot.time}</div>
+                                <div className="text-sm font-medium">{slot.name}</div>
+                                <div className="text-xs bg-surface px-2 py-1 rounded w-fit border border-border">{slot.machine}</div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
