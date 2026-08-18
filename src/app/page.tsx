@@ -342,14 +342,14 @@ export default function Home() {
       </section>
 
       {/* Care Coordination Section */}
-      <section id="care-coordination" className="py-24 bg-secondary text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-[100px] pointer-events-none"></div>
+      <section id="care-coordination" className="py-24 bg-[#FFF0F3] text-secondary relative overflow-hidden border-y border-[#FCE7EB]">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-[100px] pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <span className="inline-block tracking-widest uppercase text-sm font-bold text-primary mb-4 bg-primary/10 px-4 py-1.5 rounded-full">Clinical Coordination</span>
-              <h2 className="text-4xl md:text-5xl font-black mb-6">Seamless Care Handoffs.</h2>
-              <p className="text-xl opacity-80 mb-10 leading-relaxed">
+              <h2 className="text-4xl md:text-5xl font-black text-secondary mb-6">Seamless Care Handoffs.</h2>
+              <p className="text-xl text-text-muted mb-10 leading-relaxed">
                 We eliminate the administrative friction of accepting traveling patients. Get complete, verified medical profiles before the patient even walks through your doors.
               </p>
               
@@ -359,11 +359,11 @@ export default function Home() {
                   { icon: "⚕️", title: "Precise Prescriptions", desc: "Dialysate flow, dialyzer type, and dry weight specifications shared directly from the home center." },
                   { icon: "🔒", title: "Secure Data Transfer", desc: "HIPAA-compliant sharing of medical histories, ensuring patient privacy and center liability protection." }
                 ].map((feature, idx) => (
-                  <div key={idx} className="flex gap-4 items-start bg-white/5 p-4 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
-                    <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center text-2xl shrink-0">{feature.icon}</div>
+                  <div key={idx} className="flex gap-4 items-start bg-white p-5 rounded-2xl border border-rose-100 shadow-sm hover:border-primary/30 hover:shadow-md transition-all">
+                    <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-2xl shrink-0">{feature.icon}</div>
                     <div>
-                      <h4 className="text-lg font-bold mb-1">{feature.title}</h4>
-                      <p className="opacity-70 text-sm leading-relaxed">{feature.desc}</p>
+                      <h4 className="text-lg font-bold text-secondary mb-1">{feature.title}</h4>
+                      <p className="text-text-muted text-sm leading-relaxed">{feature.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -372,16 +372,16 @@ export default function Home() {
             
             <div className="relative">
               {/* Visual representation of data flow */}
-              <div className="bg-white text-secondary p-8 rounded-[2.5rem] shadow-2xl relative border border-border">
+              <div className="bg-white text-secondary p-8 rounded-[2.5rem] shadow-xl relative border border-rose-100">
                 <div className="absolute -top-4 -right-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
                   <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span> Patient Verified
                 </div>
                 <div className="flex items-center gap-4 mb-6 pb-6 border-b border-border">
-                  <div className="w-16 h-16 bg-slate-200 rounded-full flex-shrink-0 overflow-hidden relative">
+                  <div className="w-16 h-16 bg-rose-50 rounded-full flex-shrink-0 overflow-hidden relative">
                      <div className="absolute inset-0 bg-primary/10 flex items-center justify-center text-primary font-bold text-xl">#</div>
                   </div>
                   <div>
-                    <h3 className="font-bold text-xl">Patient #4928</h3>
+                    <h3 className="font-bold text-xl text-secondary">Patient #4928</h3>
                     <p className="text-text-muted text-sm">Traveling from {centers[1].name}, {centers[1].city}</p>
                   </div>
                 </div>
@@ -398,21 +398,21 @@ export default function Home() {
                   </div>
                   
                   <div className="grid grid-cols-2 gap-4 mt-6">
-                    <div className="bg-surface p-3 rounded-xl border border-border">
+                    <div className="bg-[#FFF5F7] p-3 rounded-xl border border-rose-100/80">
                       <span className="block text-xs text-text-muted uppercase tracking-wider mb-1">Dry Weight</span>
-                      <span className="font-bold text-lg">65.5 kg</span>
+                      <span className="font-bold text-lg text-secondary">65.5 kg</span>
                     </div>
-                    <div className="bg-surface p-3 rounded-xl border border-border">
+                    <div className="bg-[#FFF5F7] p-3 rounded-xl border border-rose-100/80">
                       <span className="block text-xs text-text-muted uppercase tracking-wider mb-1">Blood Flow</span>
-                      <span className="font-bold text-lg">300 ml/min</span>
+                      <span className="font-bold text-lg text-secondary">300 ml/min</span>
                     </div>
-                    <div className="bg-surface p-3 rounded-xl border border-border col-span-2">
+                    <div className="bg-[#FFF5F7] p-3 rounded-xl border border-rose-100/80 col-span-2">
                       <span className="block text-xs text-text-muted uppercase tracking-wider mb-1">Special Instructions</span>
-                      <span className="font-bold text-sm">{services[1].name} required. High flux dialyzer.</span>
+                      <span className="font-bold text-sm text-secondary">{services[1].name} required. High flux dialyzer.</span>
                     </div>
                   </div>
                   
-                  <button className="w-full mt-4 bg-primary hover:bg-primary-hover text-white py-3 rounded-xl font-bold transition-colors">
+                  <button className="w-full mt-4 bg-primary hover:bg-primary-hover text-white py-3 rounded-xl font-bold transition-colors shadow-md hover:shadow-lg">
                     Review Full Prescription
                   </button>
                 </div>
@@ -772,59 +772,71 @@ export default function Home() {
       </section>
 
       {/* Comparison */}
-      <section id="comparison" className="py-24 bg-secondary text-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="comparison-grid grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-32">
-            <div className="comparison-col">
-              <h3 className="text-2xl font-medium opacity-50 mb-8">Traditional coordination</h3>
-              <ul className="space-y-4 text-lg">
-                {["Search", "Call", "Ask availability", "Ask pricing", "Send details", "Wait"].map((item, i) => (
-                  <li key={i} className="flex items-center gap-4 opacity-70">
-                    <span className="text-text-muted">→</span> {item}
-                  </li>
-                ))}
-              </ul>
+      <section id="comparison" className="py-24 bg-[#FFF0F3] text-secondary border-y border-[#FCE7EB] relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="comparison-grid grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-stretch">
+            <div className="comparison-col bg-white/70 backdrop-blur-sm p-8 md:p-10 rounded-3xl border border-rose-100/80 shadow-sm flex flex-col justify-between">
+              <div>
+                <span className="inline-block uppercase tracking-wider text-xs font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded-full mb-4">Old Workflow</span>
+                <h3 className="text-2xl font-bold text-slate-600 mb-8">Traditional coordination</h3>
+                <ul className="space-y-4 text-base md:text-lg">
+                  {["Search", "Call", "Ask availability", "Ask pricing", "Send details", "Wait"].map((item, i) => (
+                    <li key={i} className="flex items-center gap-3 text-slate-500 font-medium">
+                      <span className="w-6 h-6 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center text-xs font-bold shrink-0">→</span> 
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-            <div className="comparison-col">
-              <h3 className="text-2xl font-bold text-primary mb-8">Connected experience</h3>
-              <ul className="space-y-4 text-lg">
-                {["Discover", "Compare", "Check information", "Book / Request", "Coordinate"].map((item, i) => (
-                  <li key={i} className="flex items-center gap-4">
-                    <span className="text-primary font-bold">✓</span> {item}
-                  </li>
-                ))}
-              </ul>
+            
+            <div className="comparison-col bg-white p-8 md:p-10 rounded-3xl border-2 border-primary/20 shadow-xl relative overflow-hidden flex flex-col justify-between">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-2xl pointer-events-none"></div>
+              <div>
+                <span className="inline-block uppercase tracking-wider text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full mb-4">DialysisOnGo Network</span>
+                <h3 className="text-2xl font-black text-secondary mb-8">Connected experience</h3>
+                <ul className="space-y-4 text-base md:text-lg">
+                  {["Discover", "Compare", "Check information", "Book / Request", "Coordinate"].map((item, i) => (
+                    <li key={i} className="flex items-center gap-3 text-secondary font-bold">
+                      <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-black shrink-0">✓</span> 
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* 3D Globe Section */}
-      <section className="py-20 md:py-24 bg-gradient-to-br from-[#0a0a0a] to-[#1a1a1a] text-white relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
-          <div className="z-10">
+      <section className="py-20 md:py-24 bg-[#FFF0F3] text-secondary relative overflow-hidden border-y border-[#FCE7EB]">
+        <div className="absolute top-1/2 -left-20 w-80 h-80 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center relative z-10">
+          <div>
             <span className="inline-block tracking-widest uppercase text-sm font-bold text-primary mb-4 bg-primary/10 px-4 py-1.5 rounded-full">Pan-India Reach</span>
-            <h2 className="text-4xl md:text-5xl font-black mb-6">Patients across India are traveling. Are you ready?</h2>
-            <p className="text-xl opacity-80 mb-8 leading-relaxed">Watch as patients from across India plan their medical travel to verified DialysisOnGo centers.</p>
-            <div className="flex items-center gap-6">
-              <div>
-                <div className="text-3xl font-black text-primary">2.4k+</div>
-                <div className="text-sm opacity-60 uppercase tracking-widest font-bold mt-1">Monthly Travelers</div>
+            <h2 className="text-4xl md:text-5xl font-black text-secondary mb-6">Patients across India are traveling. Are you ready?</h2>
+            <p className="text-xl text-text-muted mb-8 leading-relaxed">Watch as patients from across India plan their medical travel to verified DialysisOnGo centers.</p>
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+              <div className="bg-white px-6 py-4 rounded-2xl border border-rose-100 shadow-sm">
+                <div className="text-3xl md:text-4xl font-black text-primary">2.4k+</div>
+                <div className="text-xs text-text-muted uppercase tracking-widest font-bold mt-1">Monthly Travelers</div>
               </div>
-              <div className="w-px h-12 bg-white/20"></div>
-              <div>
-                <div className="text-3xl font-black text-primary">28+</div>
-                <div className="text-sm opacity-60 uppercase tracking-widest font-bold mt-1">States</div>
+              <div className="bg-white px-6 py-4 rounded-2xl border border-rose-100 shadow-sm">
+                <div className="text-3xl md:text-4xl font-black text-primary">28+</div>
+                <div className="text-xs text-text-muted uppercase tracking-widest font-bold mt-1">States Covered</div>
               </div>
             </div>
           </div>
-          <div className="h-[250px] sm:h-[400px] md:h-[600px] w-full relative flex items-center justify-center lg:justify-end mt-8 lg:mt-0">
-            <div className="relative w-full h-full sm:h-[120%] sm:-m-10 p-4 sm:p-8 flex items-center justify-center">
+          <div className="h-[280px] sm:h-[420px] md:h-[550px] w-full relative flex items-center justify-center lg:justify-end mt-4 lg:mt-0">
+            <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-xl border border-rose-100 bg-white/50 backdrop-blur-sm p-4 flex items-center justify-center">
               <Image 
                 src="/india-map.jpg" 
                 alt="DialysisOnGo India Map" 
                 fill 
-                className="object-contain object-right drop-shadow-2xl" 
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-contain p-2" 
                 priority
               />
             </div>
@@ -833,11 +845,13 @@ export default function Home() {
       </section>
 
       {/* Video Testimonials */}
-      <section className="py-24 bg-secondary text-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="py-24 bg-[#FFF0F3] text-secondary overflow-hidden border-y border-[#FCE7EB] relative">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-[100px] pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="section-header text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-black mb-4">Don't just take our word for it.</h2>
-            <p className="text-xl opacity-80">Hear from centers that have already transformed their booking flow.</p>
+            <span className="inline-block tracking-widest uppercase text-sm font-bold text-primary mb-4 bg-primary/10 px-4 py-1.5 rounded-full">Partner Feedback</span>
+            <h2 className="text-3xl md:text-5xl font-black text-secondary mb-4">Don't just take our word for it.</h2>
+            <p className="text-xl text-text-muted">Hear from centers that have already transformed their booking flow.</p>
           </div>
           
           <div className="testimonials-container flex gap-4 md:gap-6 overflow-x-auto pb-8 scrollbar-hide snap-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
@@ -847,15 +861,16 @@ export default function Home() {
               { id: 3, city: "Gurugram Kidney Center", quote: `"Escrow payments and strict cancellation policies mean we never lose out on no-shows. It's a game changer for us."`, img: "https://dialysisongo-public.s3.ap-south-1.amazonaws.com/superadmins/97bd407d-99ea-4511-8617-13d221a90dc0/b2b53434-32a4-4ce6-9eb6-d464be673d49-Gurgaon.jpg" },
               { id: 4, city: "Apex Healthcare Katra", quote: `"Since boarding with DialysisOnGo, managing out-of-town patients has become effortless. Highly recommended!"`, img: "https://dialysisongo-public.s3.ap-south-1.amazonaws.com/superadmins/97bd407d-99ea-4511-8617-13d221a90dc0/c5b4c798-659f-448e-8f3e-2efbf6c01928-dishant-thapa-K0s4LcHtOPQ-unsplash.jpg" }
             ].map((item) => (
-              <div key={item.id} className="testimonial-card flex-none w-[280px] sm:w-[300px] h-[350px] sm:h-[400px] relative rounded-3xl overflow-hidden group cursor-pointer snap-center border border-white/10 hover:w-[320px] sm:hover:w-[400px] transition-all duration-700 ease-out">
-                <div className="absolute inset-0 bg-slate-800">
-                  <Image src={item.img} alt={item.city} fill className="object-cover opacity-50 group-hover:opacity-80 transition-opacity duration-700" />
+              <div key={item.id} className="testimonial-card flex-none w-[280px] sm:w-[300px] h-[350px] sm:h-[400px] relative rounded-3xl overflow-hidden group cursor-pointer snap-center border border-rose-100 shadow-lg hover:w-[320px] sm:hover:w-[400px] hover:shadow-2xl transition-all duration-700 ease-out">
+                <div className="absolute inset-0 bg-slate-900">
+                  <Image src={item.img} alt={item.city} fill sizes="(max-width: 768px) 300px, 400px" className="object-cover opacity-60 group-hover:opacity-75 transition-opacity duration-700" />
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
                 
-                <div className="absolute bottom-6 left-6 right-6">
-                  <h3 className="font-bold text-xl mb-1">{item.city}</h3>
-                  <p className="text-sm opacity-80 line-clamp-2 group-hover:line-clamp-none transition-all">{item.quote}</p>
+                <div className="absolute bottom-6 left-6 right-6 text-white">
+                  <span className="text-primary text-xs font-bold uppercase tracking-wider bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-md mb-2 inline-block">Verified Partner</span>
+                  <h3 className="font-bold text-xl mb-2 text-white">{item.city}</h3>
+                  <p className="text-sm text-slate-200 line-clamp-3 group-hover:line-clamp-none transition-all leading-relaxed">{item.quote}</p>
                 </div>
               </div>
             ))}
